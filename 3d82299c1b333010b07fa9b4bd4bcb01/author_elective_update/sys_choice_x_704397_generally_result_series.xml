@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="series" table="x_704397_generally_result" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>series</element>
+            <name>x_704397_generally_result</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:28:44</sys_created_on>
+            <sys_id>2f55a9501b733010b07fa9b4bd4bcbac</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>series</sys_name>
+            <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+            <sys_update_name>sys_choice_x_704397_generally_result_series</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:28:44</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>series</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>GKS</label>
+            <language>en</language>
+            <name>x_704397_generally_result</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:28:44</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6355a9501b733010b07fa9b4bd4bcbb2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:28:44</sys_updated_on>
+            <value>gks</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>series</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>IFT</label>
+            <language>en</language>
+            <name>x_704397_generally_result</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:28:44</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a355a9501b733010b07fa9b4bd4bcbac</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:28:44</sys_updated_on>
+            <value>ift</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>series</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>WRC</label>
+            <language>en</language>
+            <name>x_704397_generally_result</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:28:44</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e755a9501b733010b07fa9b4bd4bcbaf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:28:44</sys_updated_on>
+            <value>wrc</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

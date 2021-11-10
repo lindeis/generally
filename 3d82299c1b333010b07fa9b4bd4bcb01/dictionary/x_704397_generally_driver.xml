@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Driver" max_length="40" name="x_704397_generally_driver" type="collection">
+        <element attributes="encode_utf8=false" label="Abbrev" max_length="32" name="abbrev" reference="x_704397_generally_driver_info" type="reference"/>
+        <element label="Age" max_length="40" name="age" type="integer"/>
+        <element label="Contender" max_length="40" name="contender" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Display" max_length="40" name="display" type="string"/>
+        <element label="Human" max_length="40" name="human" type="boolean"/>
+        <element label="Junior" max_length="40" name="junior" type="boolean"/>
+        <element label="Market value" max_length="40" name="market_value" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="computer" label="Player" max_length="40" name="player" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Arpoc" value="arpoc"/>
+                <element inactive_on_update="false" label="Computer" value="computer"/>
+                <element inactive_on_update="false" label="Rolo" value="rolo"/>
+            </choice>
+        </element>
+        <element label="Points" max_length="40" name="points" type="integer"/>
+        <element label="Skill" max_length="40" name="skill" type="integer"/>
+        <element label="Standing" max_length="40" name="standing" type="integer"/>
+        <element attributes="encode_utf8=false" label="Team" max_length="32" name="team" reference="x_704397_generally_team" type="reference"/>
+        <index name="index">
+            <element name="abbrev"/>
+        </index>
+        <index name="index2">
+            <element name="team"/>
+        </index>
+    </element>
+</database>

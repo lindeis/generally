@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="helmet" label="Helmet" language="en" table="x_704397_generally_driver_info">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>helmet</element>
+            <help/>
+            <hint/>
+            <label>Helmet</label>
+            <language>en</language>
+            <name>x_704397_generally_driver_info</name>
+            <plural>Helmets</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:41:17</sys_created_on>
+            <sys_id>1f3861141b733010b07fa9b4bd4bcb36</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Helmet</sys_name>
+            <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+            <sys_update_name>sys_documentation_x_704397_generally_driver_info_helmet_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:41:17</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

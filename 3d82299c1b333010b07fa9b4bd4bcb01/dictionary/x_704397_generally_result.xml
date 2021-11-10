@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Result" max_length="40" name="x_704397_generally_result" type="collection">
+        <element attributes="encode_utf8=false" label="Driver" max_length="32" name="driver" reference="x_704397_generally_driver" type="reference"/>
+        <element label="Fastest lap" max_length="15" name="fastest_lap" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Position" max_length="40" name="position" type="integer"/>
+        <element label="Round" max_length="40" name="round" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="ift" label="Series" max_length="40" name="series" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="GKS" value="gks"/>
+                <element inactive_on_update="false" label="IFT" value="ift"/>
+                <element inactive_on_update="false" label="WRC" value="wrc"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Track" max_length="40" name="track" type="string"/>
+        <element label="Year" max_length="40" name="year" type="integer"/>
+        <index name="index">
+            <element name="driver"/>
+        </index>
+    </element>
+</database>

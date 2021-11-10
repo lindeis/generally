@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="1b75799c1b733010b07fa9b4bd4bcb38" sys_domain="global" table="x_704397_generally_team" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:39:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>1f75799c1b733010b07fa9b4bd4bcb3a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_704397_generally_team" name="x_704397_generally_team" sys_domain="global" view="Default view">1b75799c1b733010b07fa9b4bd4bcb38</sys_ui_form>
+            <sys_ui_section caption="Team" display_value="Team" name="x_704397_generally_team" sys_domain="global" view="Default view">47a4351c1b733010b07fa9b4bd4bcbbf</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 12:39:10</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:39:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9b75799c1b733010b07fa9b4bd4bcb70</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_704397_generally_team" name="x_704397_generally_team" sys_domain="global" view="Default view">1b75799c1b733010b07fa9b4bd4bcb38</sys_ui_form>
+            <sys_ui_section caption="Driver Lineup" display_value="Driver Lineup" name="x_704397_generally_team" sys_domain="global" view="Default view">9f75799c1b733010b07fa9b4bd4bcb36</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 13:02:41</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:39:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d775799c1b733010b07fa9b4bd4bcb3b</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_704397_generally_team" name="x_704397_generally_team" sys_domain="global" view="Default view">1b75799c1b733010b07fa9b4bd4bcb38</sys_ui_form>
+            <sys_ui_section caption="Market Info" display_value="Market Info" name="x_704397_generally_team" sys_domain="global" view="Default view">1775799c1b733010b07fa9b4bd4bcb36</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 13:02:41</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:39:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d375799c1b733010b07fa9b4bd4bcb74</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_704397_generally_team" name="x_704397_generally_team" sys_domain="global" view="Default view">1b75799c1b733010b07fa9b4bd4bcb38</sys_ui_form>
+            <sys_ui_section caption="Season Info" display_value="Season Info" name="x_704397_generally_team" sys_domain="global" view="Default view">5b75799c1b733010b07fa9b4bd4bcb37</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 12:39:11</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_704397_generally_team</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:39:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>1b75799c1b733010b07fa9b4bd4bcb38</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_704397_generally_team</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+            <sys_update_name>sys_ui_form_sections_1b75799c1b733010b07fa9b4bd4bcb38</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 12:39:10</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>
