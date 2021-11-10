@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="player" table="x_704397_generally_driver" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>player</element>
+            <name>x_704397_generally_driver</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:23:32</sys_created_on>
+            <sys_id>172429101b733010b07fa9b4bd4bcb44</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>player</sys_name>
+            <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+            <sys_update_name>sys_choice_x_704397_generally_driver_player</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:23:32</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>player</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Arpoc</label>
+            <language>en</language>
+            <name>x_704397_generally_driver</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:23:32</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>1b2429101b733010b07fa9b4bd4bcb43</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:23:32</sys_updated_on>
+            <value>arpoc</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>player</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Computer</label>
+            <language>en</language>
+            <name>x_704397_generally_driver</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:23:32</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>132429101b733010b07fa9b4bd4bcb47</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:23:32</sys_updated_on>
+            <value>computer</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>player</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Rolo</label>
+            <language>en</language>
+            <name>x_704397_generally_driver</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 11:23:32</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9b2429101b733010b07fa9b4bd4bcb49</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 11:23:32</sys_updated_on>
+            <value>rolo</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

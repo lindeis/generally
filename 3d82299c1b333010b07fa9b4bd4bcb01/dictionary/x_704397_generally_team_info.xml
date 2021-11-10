@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Team Info" max_length="40" name="x_704397_generally_team_info" sizeclass="0" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Abbrev" max_length="40" name="abbrev" type="string"/>
+        <element label="Livery" max_length="40" name="livery" type="color"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Name" max_length="40" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Origin" max_length="40" name="origin" type="string"/>
+    </element>
+</database>

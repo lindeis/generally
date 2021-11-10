@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="21b3f15c1b733010b07fa9b4bd4bcb58" sys_domain="global" table="x_704397_generally_driver" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:31:25</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e1b3f15c1b733010b07fa9b4bd4bcb5b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_704397_generally_driver" name="x_704397_generally_driver" sys_domain="global" view="Default view">21b3f15c1b733010b07fa9b4bd4bcb58</sys_ui_form>
+            <sys_ui_section caption="Driver" display_value="Driver" name="x_704397_generally_driver" sys_domain="global" view="Default view">f992b11c1b733010b07fa9b4bd4bcbee</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 12:31:25</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:31:25</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>edb3f15c1b733010b07fa9b4bd4bcb5b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_704397_generally_driver" name="x_704397_generally_driver" sys_domain="global" view="Default view">21b3f15c1b733010b07fa9b4bd4bcb58</sys_ui_form>
+            <sys_ui_section caption="Market Info" display_value="Market Info" name="x_704397_generally_driver" sys_domain="global" view="Default view">25b3f15c1b733010b07fa9b4bd4bcb56</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 12:31:25</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:31:25</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e9b3f15c1b733010b07fa9b4bd4bcb5f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_704397_generally_driver" name="x_704397_generally_driver" sys_domain="global" view="Default view">21b3f15c1b733010b07fa9b4bd4bcb58</sys_ui_form>
+            <sys_ui_section caption="Season Info" display_value="Season Info" name="x_704397_generally_driver" sys_domain="global" view="Default view">edb3f15c1b733010b07fa9b4bd4bcb56</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 12:31:25</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_704397_generally_driver</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-11-09 12:31:24</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>21b3f15c1b733010b07fa9b4bd4bcb58</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_704397_generally_driver</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+            <sys_update_name>sys_ui_form_sections_21b3f15c1b733010b07fa9b4bd4bcb58</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-11-09 12:31:24</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

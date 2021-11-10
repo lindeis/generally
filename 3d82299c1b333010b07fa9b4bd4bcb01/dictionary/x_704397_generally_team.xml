@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Team" max_length="40" name="x_704397_generally_team" type="collection">
+        <element label="Contender" max_length="40" name="contender" type="boolean"/>
+        <element attributes="encode_utf8=false" label="Driver1" max_length="32" name="driver1" reference="x_704397_generally_driver" type="reference"/>
+        <element attributes="encode_utf8=false" label="Driver2" max_length="32" name="driver2" reference="x_704397_generally_driver" type="reference"/>
+        <element attributes="encode_utf8=false" label="Junior driver" max_length="32" name="junior_driver" reference="x_704397_generally_driver" type="reference"/>
+        <element attributes="encode_utf8=false" display="true" label="Name" max_length="32" name="name" reference="x_704397_generally_team_info" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Points" max_length="40" name="points" type="integer"/>
+        <element label="Pressure" max_length="40" name="pressure" type="integer"/>
+        <element label="Prestige" max_length="40" name="prestige" type="integer"/>
+        <element label="Resource" max_length="40" name="resource" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Series" max_length="40" name="series" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="IFT" value="ift"/>
+                <element inactive_on_update="false" label="WRC" value="wrc"/>
+            </choice>
+        </element>
+        <element label="Standing" max_length="40" name="standing" type="integer"/>
+        <element label="Year" max_length="40" name="year" type="integer"/>
+        <index name="index">
+            <element name="name"/>
+        </index>
+        <index name="index2">
+            <element name="junior_driver"/>
+        </index>
+        <index name="index3">
+            <element name="driver2"/>
+        </index>
+        <index name="index4">
+            <element name="driver1"/>
+        </index>
+    </element>
+</database>
