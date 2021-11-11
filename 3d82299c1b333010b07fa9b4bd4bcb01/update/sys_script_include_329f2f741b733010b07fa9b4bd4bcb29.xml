@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_704397_generally.TeamUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>TeamUtils</name>
+        <script><![CDATA[var TeamUtils = Class.create();
+TeamUtils.prototype = {
+    initialize: function() {},
+
+    getEmploymentAgency: function() {
+        var team = new GlideRecord('x_704397_generally_team');
+        var actualYear = gs.getProperty('x_704397_generally.actualYear');
+        team.addQuery('year', actualYear);
+        team.addNullQuery('name');
+        team.query();
+        if (team.next()) {
+            return team.getValue('sys_id');
+        }
+    },
+
+    type: 'TeamUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-11-11 10:50:27</sys_created_on>
+        <sys_id>329f2f741b733010b07fa9b4bd4bcb29</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>TeamUtils</sys_name>
+        <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+        <sys_update_name>sys_script_include_329f2f741b733010b07fa9b4bd4bcb29</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-11-11 10:50:27</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_704397_generally.DriverUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>DriverUtils</name>
+        <script><![CDATA[var DriverUtils = Class.create();
+DriverUtils.prototype = {
+    initialize: function() {},
+
+    isJuniorRookie: function(driverInfo) {
+        if (driverInfo.helmet.nil()) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    getRandomAge: function(isJunior) {
+        var ageInterval;
+        var minAge;
+        if (isJunior) {
+            ageInterval = gs.getProperty('x_704397_generally.juniorRookieAgeInterval');
+            minAge = gs.getProperty('x_704397_generally.juniorRookieMinAge');
+        } else {
+            ageInterval = gs.getProperty('x_704397_generally.rookieAgeInterval');
+            minAge = gs.getProperty('x_704397_generally.rookieMinAge');
+        }
+        return Math.floor(Math.random() * ageInterval + parseInt(minAge));
+    },
+
+    getRandomSkill: function(isJunior) {
+        var skillInterval;
+        if (isJunior) {
+            skillInterval = gs.getProperty('x_704397_generally.juniorRookieSkillInterval');
+        } else {
+            skillInterval = gs.getProperty('x_704397_generally.rookieSkillInterval');
+        }
+        return Math.floor(Math.random() * skillInterval);
+    },
+
+    generateRookie: function(driverInfo) {
+        var rookie = new GlideRecord('x_704397_generally_driver');
+        rookie.initialize();
+        rookie.setValue('abbrev', driverInfo.getValue('sys_id'));
+        rookie.setValue('age', this.getRandomAge(this.isJuniorRookie(driverInfo)));
+        rookie.setValue('skill', this.getRandomSkill(this.isJuniorRookie(driverInfo)));
+        var teamUtils = new TeamUtils();
+        rookie.setValue('team', teamUtils.getEmploymentAgency());
+        rookie.insert();
+    },
+
+    type: 'DriverUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-11-11 10:49:29</sys_created_on>
+        <sys_id>1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>DriverUtils</sys_name>
+        <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+        <sys_update_name>sys_script_include_1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-11-11 10:49:29</sys_updated_on>
+    </sys_script_include>
+</record_update>

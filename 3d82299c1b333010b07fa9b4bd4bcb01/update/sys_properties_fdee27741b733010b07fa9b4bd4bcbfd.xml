@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description/>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_704397_generally.rookieAgeInterval</name>
+        <read_roles/>
+        <suffix>rookieAgeInterval</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-11-11 10:46:52</sys_created_on>
+        <sys_id>fdee27741b733010b07fa9b4bd4bcbfd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_704397_generally.rookieAgeInterval</sys_name>
+        <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+        <sys_update_name>sys_properties_fdee27741b733010b07fa9b4bd4bcbfd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-11-11 10:46:52</sys_updated_on>
+        <type>integer</type>
+        <value>11</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=fdee27741b733010b07fa9b4bd4bcbfd"/>
+</record_update>
