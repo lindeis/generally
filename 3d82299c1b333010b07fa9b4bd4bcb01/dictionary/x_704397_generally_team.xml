@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element label="Team" max_length="40" name="x_704397_generally_team" type="collection">
         <element label="Contender" max_length="40" name="contender" type="boolean"/>
-        <element attributes="encode_utf8=false" label="Driver1" max_length="32" name="driver1" reference="x_704397_generally_driver" type="reference"/>
-        <element attributes="encode_utf8=false" label="Driver2" max_length="32" name="driver2" reference="x_704397_generally_driver" type="reference"/>
-        <element attributes="encode_utf8=false" label="Junior driver" max_length="32" name="junior_driver" reference="x_704397_generally_driver" type="reference"/>
+        <element attributes="encode_utf8=false, ref_auto_completer=AJAXReferenceChoice" choice="1" label="Driver1" max_length="32" name="driver1" reference="x_704397_generally_driver" reference_qual="javascript:&quot;team.year=&quot; + gs.getProperty('x_704397_generally.actualYear') + &quot;^team.nameISEMPTY&quot;" type="reference" use_reference_qualifier="advanced">
+            <choice/>
+        </element>
+        <element attributes="encode_utf8=false, ref_auto_completer=AJAXReferenceChoice" choice="1" label="Driver2" max_length="32" name="driver2" reference="x_704397_generally_driver" reference_qual="javascript:&quot;team.year=&quot; + gs.getProperty('x_704397_generally.actualYear') + &quot;^team.nameISEMPTY&quot;" type="reference" use_reference_qualifier="advanced">
+            <choice/>
+        </element>
+        <element attributes="encode_utf8=false, ref_auto_completer=AJAXReferenceChoice" choice="1" label="Junior driver" max_length="32" name="junior_driver" reference="x_704397_generally_driver" reference_qual="javascript:&quot;team.year=&quot; + gs.getProperty('x_704397_generally.actualYear') + &quot;^team.nameISEMPTY&quot;" type="reference" use_reference_qualifier="advanced">
+            <choice/>
+        </element>
         <element attributes="encode_utf8=false" display="true" label="Name" max_length="32" name="name" reference="x_704397_generally_team_info" type="reference"/>
         <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
         <element label="Points" max_length="40" name="points" type="integer"/>
