@@ -13,8 +13,7 @@ TeamUtils.prototype = {
 
     getEmploymentAgency: function() {
         var team = new GlideRecord('x_704397_generally_team');
-        var actualYear = gs.getProperty('x_704397_generally.actualYear');
-        team.addQuery('year', actualYear);
+        team.addQuery('year', gs.getProperty('x_704397_generally.actualYear'));
         team.addNullQuery('name');
         team.query();
         if (team.next()) {
@@ -23,14 +22,13 @@ TeamUtils.prototype = {
     },
 
     getRandomResource: function() {
-        var resourceInterval = gs.getProperty('x_704397_generally.resourceInterval');
-        return Math.floor(Math.random() * resourceInterval);
+        return Math.floor(Math.random() * gs.getProperty('x_704397_generally.resourceInterval'));
     },
 
     generateNewTeam: function(teamInfo) {
         var newTeam = new GlideRecord('x_704397_generally_team');
-        var actualYear = gs.getProperty('x_704397_generally.actualYear');
-        newTeam.setValue('year', actualYear);
+        newTeam.initialize();
+        newTeam.setValue('year', gs.getProperty('x_704397_generally.actualYear'));
         newTeam.setValue('name', teamInfo.getValue('sys_id'));
         newTeam.setValue('series', 'wrc');
         newTeam.setValue('prestige', 0);
@@ -39,19 +37,26 @@ TeamUtils.prototype = {
         newTeam.insert();
     },
 
+    confirmLineup: function(team, driver1, driver2, juniorDriver) {
+        var driverUtils = new DriverUtils();
+        driverUtils.signContract(driver1, team);
+        driverUtils.signContract(driver2, team);
+        driverUtils.signContract(juniorDriver, team);
+    },
+
     type: 'TeamUtils'
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-11-11 10:50:27</sys_created_on>
         <sys_id>329f2f741b733010b07fa9b4bd4bcb29</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_329f2f741b733010b07fa9b4bd4bcb29</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-11-11 12:25:35</sys_updated_on>
+        <sys_updated_on>2021-11-13 11:18:25</sys_updated_on>
     </sys_script_include>
 </record_update>
