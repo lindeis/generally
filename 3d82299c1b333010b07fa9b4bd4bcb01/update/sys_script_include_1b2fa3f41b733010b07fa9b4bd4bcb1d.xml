@@ -113,8 +113,87 @@ DriverUtils.prototype = {
         }
     },
 
+    getFinishes: function(driver) {
+        var finishes = "";
+        for (var i = 0; i < gs.getProperty('x_704397_generally.lastPosition'); i++) {
+            if (i == gs.getProperty('x_704397_generally.lastPosition') - 1) {
+                finishes += this.getPositionCount(driver, i + 1)
+                    .toString(gs.getProperty('x_704397_generally.radix'));
+            } else {
+                finishes += this.getPositionCount(driver, i + 1)
+                    .toString(gs.getProperty('x_704397_generally.radix')) + ",";
+            }
+        }
+        return finishes;
+    },
+
+    getReversedPointsProgress: function(driver, series) {
+        var resultUtils = new ResultUtils();
+        var pointAllocation = resultUtils.getPointAllocation(series);
+        var progress = "";
+        for (var i = resultUtils.getRoundCount(series); i > 0; i--) {
+            var result = new GlideRecord('x_704397_generally_result');
+            result.addQuery('year', gs.getProperty('x_704397_generally.actualYear'));
+            result.addQuery('driver', driver.getValue('sys_id'));
+            result.addQuery('round', i);
+            result.query();
+            if (result.next()) {
+                var position = result.getValue('position');
+                if (i == gs.getProperty('x_704397_generally.firstPosition')) {
+                    progress += pointAllocation[position - 1]
+                        .toString(gs.getProperty('x_704397_generally.radix'));
+                } else {
+                    progress += pointAllocation[position - 1]
+                        .toString(gs.getProperty('x_704397_generally.radix')) + ",";
+                }
+            }
+        }
+        return progress;
+    },
+
+    calculateStandings: function(series) {
+        var driver = new GlideRecord('x_704397_generally_driver');
+        driver.addQuery('team.year', gs.getProperty('x_704397_generally.actualYear'));
+        if (series === gs.getProperty('x_704397_generally.juniorSeries')) {
+            driver.addQuery('junior', 'true');
+        } else {
+            driver.addQuery('team.series', series);
+            driver.addQuery('junior', 'false');
+        }
+        driver.query();
+        var resultUtils = new ResultUtils();
+        var standings = [];
+        while (driver.next()) {
+            var performance = {
+                driver: driver.getValue('sys_id'),
+                points: parseInt(driver.getValue('points')),
+                finishes: this.getFinishes(driver),
+                reversedPointsProgress: this.getReversedPointsProgress(driver, series)
+            };
+            standings.push(performance);
+        }
+        resultUtils.sortStandings(standings);
+        return standings;
+    },
+
+    updateStandings: function(standings) {
+        for (var i = 0; i < gs.getProperty('x_704397_generally.lastPosition'); i++) {
+            var driver = new GlideRecord('x_704397_generally_driver');
+            driver.addQuery('sys_id', standings[i].driver);
+            driver.query();
+            if (driver.next()) {
+                driver.setValue('standing', i + 1);
+                driver.update();
+            }
+        }
+    },
+
     updateSeasonInfo: function() {
         this.updatePoints();
+        var series = gs.getProperty('x_704397_generally.series').split(',');
+        for (var i = 0; i < series.length; i++) {
+            this.updateStandings(this.calculateStandings(series[i]));
+        }
     },
 
     type: 'DriverUtils'
@@ -123,13 +202,13 @@ DriverUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-11-11 10:49:29</sys_created_on>
         <sys_id>1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-01-05 11:36:37</sys_updated_on>
+        <sys_updated_on>2022-01-18 09:27:04</sys_updated_on>
     </sys_script_include>
 </record_update>
