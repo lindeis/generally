@@ -151,7 +151,51 @@ DriverUtils.prototype = {
         return progress;
     },
 
-    calculateStandings: function(series) {
+    getFinalRacePosition: function(driver, series) {
+        var result = new GlideRecord('x_704397_generally_result');
+        result.addQuery('driver', driver.getValue('sys_id'));
+        var resultUtils = new ResultUtils();
+        result.addQuery('round', resultUtils.getRoundCount(series));
+        result.query();
+        if (result.next()) {
+            return result.getValue('position');
+        }
+    },
+
+    getFinalRacePoints: function(driver, series) {
+        var resultUtils = new ResultUtils();
+        var pointAllocation = resultUtils.getPointAllocation(series);
+        return parseInt(pointAllocation[this.getFinalRacePosition(driver, series) - 1]);
+    },
+
+    replaceFinishes: function(finishes, position, positionCount) {
+        return finishes.substring(0, position * 2 - 2) +
+            positionCount.toString(gs.getProperty('x_704397_generally.radix')) +
+            finishes.substring(position * 2 - 1);
+    },
+
+    getPerformance: function(isFinal, driver, series) {
+        var points = parseInt(driver.getValue('points'));
+        var finishes = this.getFinishes(driver);
+        var progress = this.getReversedPointsProgress(driver, series);
+        if (!isFinal) {
+            points -= this.getFinalRacePoints(driver, series);
+            var position = this.getFinalRacePosition(driver, series);
+            var positionCount = parseInt(finishes.charAt(position * 2 - 2),
+                gs.getProperty('x_704397_generally.radix'));
+            finishes = this.replaceFinishes(finishes, position, positionCount - 1);
+            progress = progress.substring(0, progress.length - 2);
+        }
+        var performance = {
+            driver: driver.getValue('sys_id'),
+            points: points,
+            finishes: finishes,
+            reversedPointsProgress: progress
+        };
+        return performance;
+    },
+
+    calculateStandings: function(isFinal, series) {
         var driver = new GlideRecord('x_704397_generally_driver');
         driver.addQuery('team.year', gs.getProperty('x_704397_generally.actualYear'));
         if (series === gs.getProperty('x_704397_generally.juniorSeries')) {
@@ -161,17 +205,11 @@ DriverUtils.prototype = {
             driver.addQuery('junior', 'false');
         }
         driver.query();
-        var resultUtils = new ResultUtils();
         var standings = [];
         while (driver.next()) {
-            var performance = {
-                driver: driver.getValue('sys_id'),
-                points: parseInt(driver.getValue('points')),
-                finishes: this.getFinishes(driver),
-                reversedPointsProgress: this.getReversedPointsProgress(driver, series)
-            };
-            standings.push(performance);
+            standings.push(this.getPerformance(isFinal, driver, series));
         }
+        var resultUtils = new ResultUtils();
         resultUtils.sortStandings(standings);
         return standings;
     },
@@ -188,11 +226,73 @@ DriverUtils.prototype = {
         }
     },
 
+    calculateContenderHappyStandings: function(series, standings) {
+        var resultUtils = new ResultUtils();
+        var pointAllocation = resultUtils.getPointAllocation(series);
+        standings.reverse();
+        for (var i = 0; i < gs.getProperty('x_704397_generally.lastPosition'); i++) {
+            var points = parseInt(pointAllocation[i]);
+            var position = i + 1;
+            var positionCount = parseInt(standings[i].finishes.charAt(position * 2 - 2),
+                gs.getProperty('x_704397_generally.radix'));
+            var finishes = this.replaceFinishes(
+                standings[i].finishes, position, positionCount + 1);
+            var progress = "," + points.toString(gs.getProperty('x_704397_generally.radix'));
+            standings[i].points += points;
+            standings[i].finishes = finishes;
+            standings[i].reversedPointsProgress += progress;
+        }
+    },
+
+    getContenderHappyPerformance: function(series, performance) {
+        var resultUtils = new ResultUtils();
+        var pointAllocation = resultUtils.getPointAllocation(series);
+        var firstPosition = parseInt(gs.getProperty('x_704397_generally.firstPosition'));
+        var points = parseInt(pointAllocation[firstPosition - 1]);
+        var positionCount = parseInt(performance.finishes.charAt(firstPosition * 2 - 2),
+            gs.getProperty('x_704397_generally.radix'));
+        var finishes = this.replaceFinishes(
+            performance.finishes, firstPosition, positionCount + 1);
+        var progress = "," + points.toString(gs.getProperty('x_704397_generally.radix'));
+        performance.points += points;
+        performance.finishes = finishes;
+        performance.reversedPointsProgress += progress;
+        return performance;
+    },
+
+    isContender: function(series, performance, standings) {
+        var happyStandings = standings.slice();
+        happyStandings.push(this.getContenderHappyPerformance(series, performance));
+        var resultUtils = new ResultUtils();
+        resultUtils.sortStandings(happyStandings);
+        var firstPosition = parseInt(gs.getProperty('x_704397_generally.firstPosition'));
+        if (happyStandings[firstPosition - 1].driver === performance.driver) {
+            return true;
+        }
+        return false;
+    },
+
+    updateContenders: function(series, standings) {
+        this.calculateContenderHappyStandings(series, standings);
+        for (var i = 0; i < gs.getProperty('x_704397_generally.lastPosition'); i++) {
+            if (this.isContender(series, standings[i], standings)) {
+                var driver = new GlideRecord('x_704397_generally_driver');
+                driver.addQuery('sys_id', standings[i].driver);
+                driver.query();
+                if (driver.next()) {
+                    driver.setValue('contender', 'true');
+                    driver.update();
+                }
+            }
+        }
+    },
+
     updateSeasonInfo: function() {
         this.updatePoints();
         var series = gs.getProperty('x_704397_generally.series').split(',');
         for (var i = 0; i < series.length; i++) {
-            this.updateStandings(this.calculateStandings(series[i]));
+            this.updateStandings(this.calculateStandings(true, series[i]));
+            this.updateContenders(series[i], this.calculateStandings(false, series[i]));
         }
     },
 
@@ -202,13 +302,13 @@ DriverUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-11-11 10:49:29</sys_created_on>
         <sys_id>1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-01-18 09:27:04</sys_updated_on>
+        <sys_updated_on>2022-01-18 09:49:42</sys_updated_on>
     </sys_script_include>
 </record_update>
