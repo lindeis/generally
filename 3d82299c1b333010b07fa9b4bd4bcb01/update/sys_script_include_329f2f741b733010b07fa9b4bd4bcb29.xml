@@ -58,8 +58,103 @@ TeamUtils.prototype = {
         }
     },
 
+    getPositionCount: function(team, position) {
+        var result = new GlideRecord('x_704397_generally_result');
+        result.addQuery('driver', team.getValue('driver1'))
+            .addOrCondition('driver', team.getValue('driver2'));
+        result.addQuery('position', position);
+        result.query();
+        return result.getRowCount();
+    },
+
+    getFinishes: function(team) {
+        var finishes = "";
+        for (var i = 0; i < gs.getProperty('x_704397_generally.lastPosition'); i++) {
+            var positionCount = this.getPositionCount(team, i + 1)
+                .toString(gs.getProperty('x_704397_generally.radix'));
+            if (i == gs.getProperty('x_704397_generally.lastPosition') - 1) {
+                finishes += positionCount;
+            } else {
+                finishes += positionCount + ",";
+            }
+        }
+        return finishes;
+    },
+
+    getReversedPointsProgress: function(team, series) {
+        var resultUtils = new ResultUtils();
+        var pointAllocation = resultUtils.getPointAllocation(series);
+        var progress = "";
+        for (var i = resultUtils.getRoundCount(series); i > 0; i--) {
+            var result = new GlideRecord('x_704397_generally_result');
+            result.addQuery('driver', team.getValue('driver1'))
+                .addOrCondition('driver', team.getValue('driver2'));
+            result.addQuery('round', i);
+            result.query();
+            var points = 0;
+            while (result.next()) {
+                var position = result.getValue('position');
+                points += parseInt(pointAllocation[position - 1]);
+            }
+            points = points.toString(gs.getProperty('x_704397_generally.radix'));
+            if (i == gs.getProperty('x_704397_generally.firstPosition')) {
+                progress += points;
+            } else {
+                progress += points + ",";
+            }
+        }
+        return progress;
+    },
+
+    getPerformance: function(team, series) {
+        var points = parseInt(team.getValue('points'));
+        var finishes = this.getFinishes(team);
+        var progress = this.getReversedPointsProgress(team, series);
+        var performance = {
+            team: team.getValue('sys_id'),
+            points: points,
+            finishes: finishes,
+            reversedPointsProgress: progress
+        };
+        return performance;
+    },
+
+    calculateStandings: function(series) {
+        var team = new GlideRecord('x_704397_generally_team');
+        team.addQuery('year', gs.getProperty('x_704397_generally.actualYear'));
+        team.addQuery('series', series);
+        team.query();
+        var standings = [];
+        while (team.next()) {
+            standings.push(this.getPerformance(team, series));
+        }
+        var resultUtils = new ResultUtils();
+        resultUtils.sortStandings(standings);
+        return standings;
+    },
+
+    updateStandings: function(standings) {
+        var lastPosition = gs.getProperty('x_704397_generally.lastPosition') /
+            gs.getProperty('x_704397_generally.seatsPerTeam');
+        for (var i = 0; i < lastPosition; i++) {
+            var team = new GlideRecord('x_704397_generally_team');
+            team.addQuery('sys_id', standings[i].team);
+            team.query();
+            if (team.next()) {
+                team.setValue('standing', i + 1);
+                team.update();
+            }
+        }
+    },
+
     updateSeasonInfo: function() {
         this.updatePoints();
+        var series = gs.getProperty('x_704397_generally.series').split(',').filter(function(s) {
+            return s !== gs.getProperty('x_704397_generally.juniorSeries');
+        });
+        for (var i = 0; i < series.length; i++) {
+            this.updateStandings(this.calculateStandings(series[i]));
+        }
     },
 
     type: 'TeamUtils'
@@ -68,13 +163,13 @@ TeamUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-11-11 10:50:27</sys_created_on>
         <sys_id>329f2f741b733010b07fa9b4bd4bcb29</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_329f2f741b733010b07fa9b4bd4bcb29</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-01-18 09:53:56</sys_updated_on>
+        <sys_updated_on>2022-01-18 09:59:44</sys_updated_on>
     </sys_script_include>
 </record_update>
