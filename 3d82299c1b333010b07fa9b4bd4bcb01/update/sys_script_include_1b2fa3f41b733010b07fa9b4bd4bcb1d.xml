@@ -229,20 +229,22 @@ DriverUtils.prototype = {
     calculateContenderHappyStandings: function(series, standings) {
         var resultUtils = new ResultUtils();
         var pointAllocation = resultUtils.getPointAllocation(series);
-        standings.reverse();
+		var happyStandings = JSON.parse(JSON.stringify(standings));
+        happyStandings.reverse();
         for (var i = 0; i < gs.getProperty('x_704397_generally.lastPosition'); i++) {
             var points = parseInt(pointAllocation[i]);
             var position = i + 1;
-            var positionCount = parseInt(standings[i].finishes.charAt(position * 2 - 2),
+            var positionCount = parseInt(happyStandings[i].finishes.charAt(position * 2 - 2),
                 gs.getProperty('x_704397_generally.radix'));
             var finishes = this.replaceFinishes(
-                standings[i].finishes, position, positionCount + 1);
-            var progress = standings[i].reversedPointsProgress.replace(/^/,
+                happyStandings[i].finishes, position, positionCount + 1);
+            var progress = happyStandings[i].reversedPointsProgress.replace(/^/,
                 points.toString(gs.getProperty('x_704397_generally.radix')) + ",");
-            standings[i].points += points;
-            standings[i].finishes = finishes;
-            standings[i].reversedPointsProgress = progress;
+            happyStandings[i].points += points;
+            happyStandings[i].finishes = finishes;
+            happyStandings[i].reversedPointsProgress = progress;
         }
+		return happyStandings;
     },
 
     getContenderHappyPerformance: function(series, performance) {
@@ -275,9 +277,9 @@ DriverUtils.prototype = {
     },
 
     updateContenders: function(series, standings) {
-        this.calculateContenderHappyStandings(series, standings);
+        var happyStandings = this.calculateContenderHappyStandings(series, standings);
         for (var i = 0; i < gs.getProperty('x_704397_generally.lastPosition'); i++) {
-            if (this.isContender(series, standings[i], standings)) {
+            if (this.isContender(series, standings[i], happyStandings)) {
                 var driver = new GlideRecord('x_704397_generally_driver');
                 driver.addQuery('sys_id', standings[i].driver);
                 driver.query();
@@ -304,13 +306,13 @@ DriverUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-11-11 10:49:29</sys_created_on>
         <sys_id>1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_1b2fa3f41b733010b07fa9b4bd4bcb1d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-01-25 09:00:30</sys_updated_on>
+        <sys_updated_on>2022-01-25 09:18:52</sys_updated_on>
     </sys_script_include>
 </record_update>
