@@ -106,10 +106,25 @@ TeamUtils.prototype = {
         return progress;
     },
 
-    getPerformance: function(team, series) {
+    getPerformance: function(isFinal, team, series) {
         var points = parseInt(team.getValue('points'));
         var finishes = this.getFinishes(team);
         var progress = this.getReversedPointsProgress(team, series);
+        if (!isFinal) {
+            var firstPosition = gs.getProperty('x_704397_generally.firstPosition');
+            var seats = gs.getProperty('x_704397_generally.seatsPerTeam');
+            var driverUtils = new DriverUtils();
+            for (i = firstPosition; i <= seats; i++) {
+                var driver = new GlideRecord('x_704397_generally_driver');
+                driver.get(team.getValue('driver' + i));
+                points -= driverUtils.getFinalRacePoints(driver, series);
+                var position = driverUtils.getFinalRacePosition(driver, series);
+                var positionCount = parseInt(finishes.charAt(position * 2 - 2),
+                    gs.getProperty('x_704397_generally.radix'));
+                finishes = driverUtils.replaceFinishes(finishes, position, positionCount - 1);
+            }
+            progress = progress.substring(2, progress.length);
+        }
         var performance = {
             team: team.getValue('sys_id'),
             points: points,
@@ -119,14 +134,14 @@ TeamUtils.prototype = {
         return performance;
     },
 
-    calculateStandings: function(series) {
+    calculateStandings: function(isFinal, series) {
         var team = new GlideRecord('x_704397_generally_team');
         team.addQuery('year', gs.getProperty('x_704397_generally.actualYear'));
         team.addQuery('series', series);
         team.query();
         var standings = [];
         while (team.next()) {
-            standings.push(this.getPerformance(team, series));
+            standings.push(this.getPerformance(isFinal, team, series));
         }
         var resultUtils = new ResultUtils();
         resultUtils.sortStandings(standings);
@@ -147,13 +162,93 @@ TeamUtils.prototype = {
         }
     },
 
+    calculateContenderHappyStandings: function(series, standings) {
+        var happyStandings = JSON.parse(JSON.stringify(standings));
+        happyStandings.reverse();
+        var seats = gs.getProperty('x_704397_generally.seatsPerTeam');
+        var lastPosition = gs.getProperty('x_704397_generally.lastPosition') / seats;
+        var firstPosition = parseInt(gs.getProperty('x_704397_generally.firstPosition'));
+        var resultUtils = new ResultUtils();
+        var pointAllocation = resultUtils.getPointAllocation(series);
+        var driverUtils = new DriverUtils();
+        for (var i = 0; i < lastPosition; i++) {
+            var points = 0;
+            var finishes = happyStandings[i].finishes;
+            for (var j = firstPosition; j <= seats; j++) {
+                var position = i * seats + j;
+                points += parseInt(pointAllocation[position - 1]);
+                var positionCount = parseInt(happyStandings[i].finishes.charAt(position * 2 - 2),
+                    gs.getProperty('x_704397_generally.radix'));
+                finishes = driverUtils.replaceFinishes(finishes, position, positionCount + 1);
+            }
+            var progress = happyStandings[i].reversedPointsProgress.replace(/^/,
+                points.toString(gs.getProperty('x_704397_generally.radix')) + ",");
+            happyStandings[i].points += points;
+            happyStandings[i].finishes = finishes;
+            happyStandings[i].reversedPointsProgress = progress;
+        }
+        return happyStandings;
+    },
+
+    getContenderHappyPerformance: function(series, performance) {
+        var resultUtils = new ResultUtils();
+        var pointAllocation = resultUtils.getPointAllocation(series);
+        var firstPosition = parseInt(gs.getProperty('x_704397_generally.firstPosition'));
+        var seats = parseInt(gs.getProperty('x_704397_generally.seatsPerTeam'));
+        var points = 0;
+        var finishes = performance.finishes;
+        var driverUtils = new DriverUtils();
+        for (i = firstPosition; i <= seats; i++) {
+            points += parseInt(pointAllocation[i - 1]);
+            var positionCount = parseInt(performance.finishes.charAt(i * 2 - 2),
+                gs.getProperty('x_704397_generally.radix'));
+            finishes = driverUtils.replaceFinishes(finishes, i, positionCount + 1);
+        }
+        var progress = performance.reversedPointsProgress.replace(/^/,
+            points.toString(gs.getProperty('x_704397_generally.radix')) + ",");
+        performance.points += points;
+        performance.finishes = finishes;
+        performance.reversedPointsProgress = progress;
+        return performance;
+    },
+
+    isContender: function(series, performance, standings) {
+        var happyStandings = standings.slice();
+        happyStandings.push(this.getContenderHappyPerformance(series, performance));
+        var resultUtils = new ResultUtils();
+        resultUtils.sortStandings(happyStandings);
+        var firstPosition = parseInt(gs.getProperty('x_704397_generally.firstPosition'));
+        if (happyStandings[firstPosition - 1].team === performance.team) {
+            return true;
+        }
+        return false;
+    },
+
+    updateContenders: function(series, standings) {
+        var happyStandings = this.calculateContenderHappyStandings(series, standings);
+        var seats = gs.getProperty('x_704397_generally.seatsPerTeam');
+        var lastPosition = gs.getProperty('x_704397_generally.lastPosition') / seats;
+        for (var i = 0; i < lastPosition; i++) {
+            if (this.isContender(series, standings[i], happyStandings)) {
+                var team = new GlideRecord('x_704397_generally_team');
+                team.addQuery('sys_id', standings[i].team);
+                team.query();
+                if (team.next()) {
+                    team.setValue('contender', 'true');
+                    team.update();
+                }
+            }
+        }
+    },
+
     updateSeasonInfo: function() {
         this.updatePoints();
         var series = gs.getProperty('x_704397_generally.series').split(',').filter(function(s) {
             return s !== gs.getProperty('x_704397_generally.juniorSeries');
         });
         for (var i = 0; i < series.length; i++) {
-            this.updateStandings(this.calculateStandings(series[i]));
+            this.updateStandings(this.calculateStandings(true, series[i]));
+            this.updateContenders(series[i], this.calculateStandings(false, series[i]));
         }
     },
 
@@ -163,13 +258,13 @@ TeamUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-11-11 10:50:27</sys_created_on>
         <sys_id>329f2f741b733010b07fa9b4bd4bcb29</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>9</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_329f2f741b733010b07fa9b4bd4bcb29</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-01-18 09:59:44</sys_updated_on>
+        <sys_updated_on>2022-01-25 09:47:55</sys_updated_on>
     </sys_script_include>
 </record_update>
