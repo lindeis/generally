@@ -12,6 +12,9 @@ TeamUtils.prototype = {
     initialize: function() {},
     type: 'TeamUtils',
 
+    currentYear: parseInt(gs.getProperty('x_704397_generally.currentYear')),
+    resourceInterval: parseInt(gs.getProperty('x_704397_generally.resourceInterval')),
+
     employmentAgency: 'year=' + gs.getProperty('x_704397_generally.currentYear') + '^nameISEMPTY',
 
     getEmploymentAgency: function() {
@@ -21,19 +24,35 @@ TeamUtils.prototype = {
         if (team.next()) {
             return team.getUniqueValue();
         }
+    },
+
+    getRandomResource: function() {
+        return Math.floor(Math.random() * this.resourceInterval);
+    },
+
+    generateNewTeam: function(teamInfo) {
+        var newTeam = new GlideRecord('x_704397_generally_team');
+        newTeam.initialize();
+        newTeam.setValue('year', this.currentYear);
+        newTeam.setValue('name', teamInfo.getUniqueValue());
+        newTeam.setValue('series', 'wrc');
+        newTeam.setValue('prestige', 0);
+        newTeam.setValue('pressure', 0);
+        newTeam.setValue('resource', this.getRandomResource());
+        newTeam.insert();
     }
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:06:00</sys_created_on>
         <sys_id>96ac9dc81b610110aa740d41604bcb0d</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_96ac9dc81b610110aa740d41604bcb0d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-03 16:06:00</sys_updated_on>
+        <sys_updated_on>2022-02-03 16:55:09</sys_updated_on>
     </sys_script_include>
 </record_update>
