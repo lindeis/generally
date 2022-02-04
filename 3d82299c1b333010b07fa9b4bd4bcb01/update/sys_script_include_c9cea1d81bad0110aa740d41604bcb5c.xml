@@ -18,6 +18,10 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return 'year=' + this.currentYear + '^driverISEMPTY';
     },
 
+    positionCount: function(driverId, position) {
+        return 'year=' + this.currentYear + '^driver=' + driverId + '^position=' + position;
+    },
+
     isSeasonCompleted: function() {
         var result = new GlideRecord('x_704397_generally_result');
         result.addEncodedQuery(this.incompleteRounds());
@@ -26,6 +30,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
             return false;
         }
         return true;
+    },
+
+    getPositionCount: function(driverId, position) {
+        var result = new GlideRecord('x_704397_generally_result');
+        result.addEncodedQuery(this.positionCount(driverId, position));
+        result.query();
+        return result.getRowCount();
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
@@ -39,6 +50,6 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-04 12:14:52</sys_updated_on>
+        <sys_updated_on>2022-02-04 18:17:42</sys_updated_on>
     </sys_script_include>
 </record_update>

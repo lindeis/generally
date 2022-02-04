@@ -21,6 +21,10 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
     skillInterval: parseInt(gs.getProperty('x_704397_generally.rookieSkillInterval')),
     juniorSkillInterval: parseInt(gs.getProperty('x_704397_generally.juniorRookieSkillInterval')),
 
+    currentCompetitors: function() {
+        return 'team.year=' + this.currentYear + '^team!=' + teamUtils.getEmploymentAgency();
+    },
+
     isJuniorRookie: function(driverInfo) {
         if (driverInfo.helmet.nil()) {
             return true;
@@ -70,6 +74,40 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
             signatory.setValue('junior', 'false');
         }
         signatory.update();
+    },
+
+    getSeries: function(driverObj) {
+        var series = driverObj.getElement('team.series');
+        if (driverObj.getValue('junior') === 'true') {
+            series = this.juniorSeries;
+        }
+        return series;
+    },
+
+    calculatePoints: function(driverId, series) {
+        var points = 0;
+        for (var i = 0; i < this.lastPosition; i++) {
+            points += resultUtils.getPositionCount(driverId, i + 1) *
+                this.getPointAllocation(series)[i];
+        }
+        return points;
+    },
+
+    updatePoints: function() {
+        var driver = new GlideRecord('x_704397_generally_driver');
+        driver.addEncodedQuery(this.currentCompetitors());
+        driver.query();
+        while (driver.next()) {
+            driver.setValue(
+                'points',
+                this.calculatePoints(driver.getUniqueValue(), this.getSeries(driver))
+            );
+            driver.update();
+        }
+    },
+
+    updateSeasonInfo: function() {
+        this.updatePoints();
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
@@ -83,6 +121,6 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-04 11:30:09</sys_updated_on>
+        <sys_updated_on>2022-02-04 18:15:41</sys_updated_on>
     </sys_script_include>
 </record_update>
