@@ -25,8 +25,8 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         return 'team.year=' + this.currentYear + '^team!=' + teamUtils.getEmploymentAgency();
     },
 
-    isJuniorRookie: function(driverInfo) {
-        if (driverInfo.helmet.nil()) {
+    isJuniorRookie: function(driverInfoObj) {
+        if (driverInfoObj.helmet.nil()) {
             return true;
         }
         return false;
@@ -46,13 +46,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         return Math.floor(Math.random() * this.skillInterval);
     },
 
-    generateRookie: function(driverInfo) {
+    generateRookie: function(driverInfoObj) {
         var rookie = new GlideRecord('x_704397_generally_driver');
         rookie.initialize();
-        rookie.setValue('abbrev', driverInfo.getUniqueValue());
-        rookie.setValue('display', driverInfo.getValue('abbrev'));
-        rookie.setValue('age', this.getRandomAge(this.isJuniorRookie(driverInfo)));
-        rookie.setValue('skill', this.getRandomSkill(this.isJuniorRookie(driverInfo)));
+        rookie.setValue('abbrev', driverInfoObj.getUniqueValue());
+        rookie.setValue('display', driverInfoObj.getValue('abbrev'));
+        rookie.setValue('age', this.getRandomAge(this.isJuniorRookie(driverInfoObj)));
+        rookie.setValue('skill', this.getRandomSkill(this.isJuniorRookie(driverInfoObj)));
         rookie.setValue('team', teamUtils.getEmploymentAgency());
         rookie.insert();
     },
@@ -63,12 +63,12 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         return driverAbbrev.concat(" (", teamAbbrev, ")");
     },
 
-    signContract: function(driver, team) {
+    signContract: function(driverId, teamObj) {
         var signatory = new GlideRecord('x_704397_generally_driver');
-        signatory.get(driver);
-        signatory.setValue('display', this.getDisplay(signatory, team));
-        signatory.setValue('team', team.getUniqueValue());
-        if (team.getValue('junior_driver') === driver) {
+        signatory.get(driverId);
+        signatory.setValue('display', this.getDisplay(signatory, teamObj));
+        signatory.setValue('team', teamObj.getUniqueValue());
+        if (teamObj.getValue('junior_driver') === driverId) {
             signatory.setValue('junior', 'true');
         } else {
             signatory.setValue('junior', 'false');
@@ -114,13 +114,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-04 18:15:41</sys_updated_on>
+        <sys_updated_on>2022-02-04 18:51:02</sys_updated_on>
     </sys_script_include>
 </record_update>
