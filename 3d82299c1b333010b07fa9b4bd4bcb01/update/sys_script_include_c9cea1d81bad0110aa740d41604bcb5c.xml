@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_704397_generally.ResultUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>ResultUtils</name>
+        <script><![CDATA[var ResultUtils = Class.create();
+ResultUtils.prototype = Object.extendsObject(Utils, {
+    initialize: function() {
+        gs.include('Utils');
+    },
+    type: 'ResultUtils',
+
+    incompleteRounds: function() {
+        return 'year=' + this.currentYear + '^driverISEMPTY';
+    },
+
+    isSeasonCompleted: function() {
+        var result = new GlideRecord('x_704397_generally_result');
+        result.addEncodedQuery(this.incompleteRounds());
+        result.query();
+        if (result.next()) {
+            return false;
+        }
+        return true;
+    }
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-04 12:06:55</sys_created_on>
+        <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ResultUtils</sys_name>
+        <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+        <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-04 12:14:52</sys_updated_on>
+    </sys_script_include>
+</record_update>
