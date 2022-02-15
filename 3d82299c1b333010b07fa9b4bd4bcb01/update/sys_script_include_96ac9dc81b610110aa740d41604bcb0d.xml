@@ -20,6 +20,10 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         return 'year=' + this.currentYear + '^nameISEMPTY';
     },
 
+    currentCompetitors: function() {
+        'year=' + this.currentYear + '^sys_id!=' + this.getEmploymentAgency();
+    },
+
     getEmploymentAgency: function() {
         var team = new GlideRecord('x_704397_generally_team');
         team.addEncodedQuery(this.employmentAgency());
@@ -49,19 +53,34 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         driverUtils.signContract(driver1Id, teamObj);
         driverUtils.signContract(driver2Id, teamObj);
         driverUtils.signContract(juniorDriverId, teamObj);
+    },
+
+    updatePoints: function() {
+        var team = new GlideRecord('x_704397_generally_team');
+        team.addEncodedQuery(this.currentCompetitors());
+        team.query();
+        while (team.next()) {
+            var points = team.getElement('driver1.points') + team.getElement('driver2.points');
+            team.setValue('points', points);
+            team.update();
+        }
+    },
+
+    updateSeasonInfo: function() {
+        this.updatePoints();
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:06:00</sys_created_on>
         <sys_id>96ac9dc81b610110aa740d41604bcb0d</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_96ac9dc81b610110aa740d41604bcb0d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-04 18:41:46</sys_updated_on>
+        <sys_updated_on>2022-02-15 09:33:52</sys_updated_on>
     </sys_script_include>
 </record_update>
