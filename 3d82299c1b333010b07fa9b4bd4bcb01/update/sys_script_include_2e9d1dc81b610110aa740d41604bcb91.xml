@@ -106,6 +106,16 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
+    getFinishes: function(driverId) {
+        var finishes = "";
+        for (var i = 1; i < this.lastPosition; i++) {
+            finishes += resultUtils.getPositionCount(driverId, i).toString(this.radix) + ",";
+        }
+        finishes += resultUtils.getPositionCount(driverId, this.lastPosition)
+            .toString(this.radix);
+        return finishes;
+    },
+
     updateSeasonInfo: function() {
         this.updatePoints();
     }
@@ -114,13 +124,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-04 18:51:02</sys_updated_on>
+        <sys_updated_on>2022-02-15 15:22:25</sys_updated_on>
     </sys_script_include>
 </record_update>
