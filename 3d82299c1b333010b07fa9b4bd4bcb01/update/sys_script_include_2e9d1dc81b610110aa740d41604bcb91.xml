@@ -21,8 +21,18 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
     skillInterval: parseInt(gs.getProperty('x_704397_generally.rookieSkillInterval')),
     juniorSkillInterval: parseInt(gs.getProperty('x_704397_generally.juniorRookieSkillInterval')),
 
-    currentCompetitors: function() {
-        return 'team.year=' + this.currentYear + '^team!=' + teamUtils.getEmploymentAgency();
+    currentCompetitors: function(series) {
+        var query = 'team.year=' + this.currentYear;
+        switch (arguments.length) {
+            case 0:
+                return query += '^team!=' + teamUtils.getEmploymentAgency();
+            case 1:
+                if (series === this.juniorSeries) {
+                    return query += '^junior=true';
+                } else {
+                    return query += '^junior=false' + '^team.series=' + series;
+                }
+        }
     },
 
     isJuniorRookie: function(driverInfoObj) {
@@ -116,21 +126,56 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         return finishes;
     },
 
+    getPerformance: function(driverObj, series) {
+        var driverId = driverObj.getUniqueValue();
+        var performance = {
+            driver: driverId,
+            points: parseInt(driverObj.getElement('points')),
+            finishes: this.getFinishes(driverId),
+            reversedPointsProgress: resultUtils.getReversedPointsProgress(driverId, series)
+        };
+        return performance;
+    },
+
+    calculateStandings: function(series) {
+        var driver = new GlideRecord('x_704397_generally_driver');
+        driver.addEncodedQuery(this.currentCompetitors(series));
+        driver.query();
+        var standings = [];
+        while (driver.next()) {
+            standings.push(this.getPerformance(driver, series));
+        }
+        this.sortStandings(standings);
+        return standings;
+    },
+
+    updateStandings: function(standings) {
+        for (var i = 0; i < this.lastPosition; i++) {
+            var driver = new GlideRecord('x_704397_generally_driver');
+            driver.get(standings[i].driver);
+            driver.setValue('standing', i + 1);
+            driver.update();
+        }
+    },
+
     updateSeasonInfo: function() {
         this.updatePoints();
+        for (var i = 0; i < this.series.length; i++) {
+            this.updateStandings(this.calculateStandings(this.series[i]));
+        }
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-15 15:22:25</sys_updated_on>
+        <sys_updated_on>2022-02-15 18:39:51</sys_updated_on>
     </sys_script_include>
 </record_update>
