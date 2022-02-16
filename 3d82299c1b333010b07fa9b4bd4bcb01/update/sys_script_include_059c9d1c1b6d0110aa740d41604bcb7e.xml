@@ -36,6 +36,15 @@ Utils.prototype = {
         }
     },
 
+    glideRecordByChampionship: function(championship) {
+        switch (championship) {
+            case 'driver':
+                return new GlideRecord('x_704397_generally_driver');
+            case 'team':
+                return new GlideRecord('x_704397_generally_team');
+        }
+    },
+
     getPointAllocation: function(series) {
         var property = 'x_704397_generally.' + series + 'PointAllocation';
         var pointAllocation = gs.getProperty(property).split(',').map(function(e) {
@@ -64,13 +73,13 @@ var resultUtils = new ResultUtils();]]></script>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 10:55:08</sys_created_on>
         <sys_id>059c9d1c1b6d0110aa740d41604bcb7e</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>Utils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_059c9d1c1b6d0110aa740d41604bcb7e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-16 13:41:54</sys_updated_on>
+        <sys_updated_on>2022-02-16 15:50:32</sys_updated_on>
     </sys_script_include>
 </record_update>

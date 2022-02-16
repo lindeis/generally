@@ -14,6 +14,7 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
     },
     type: 'DriverUtils',
 
+    championship: 'driver',
     ageInterval: parseInt(gs.getProperty('x_704397_generally.rookieAgeInterval')),
     juniorAgeInterval: parseInt(gs.getProperty('x_704397_generally.juniorRookieAgeInterval')),
     minAge: parseInt(gs.getProperty('x_704397_generally.rookieMinAge')),
@@ -21,18 +22,8 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
     skillInterval: parseInt(gs.getProperty('x_704397_generally.rookieSkillInterval')),
     juniorSkillInterval: parseInt(gs.getProperty('x_704397_generally.juniorRookieSkillInterval')),
 
-    currentCompetitors: function(series) {
-        var query = 'team.year=' + this.currentYear;
-        switch (arguments.length) {
-            case 0:
-                return query + '^team!=' + teamUtils.getEmploymentAgency();
-            case 1:
-                if (series === this.juniorSeries) {
-                    return query + '^junior=true';
-                } else {
-                    return query + '^junior=false' + '^team.series=' + series;
-                }
-        }
+    currentCompetitors: function() {
+        return 'team.year=' + this.currentYear + '^team!=' + teamUtils.getEmploymentAgency();
     },
 
     isJuniorRookie: function(driverInfoObj) {
@@ -116,22 +107,10 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    calculateStandings: function(series) {
-        var driver = new GlideRecord('x_704397_generally_driver');
-        driver.addEncodedQuery(this.currentCompetitors(series));
-        driver.query();
-        var standings = [];
-        while (driver.next()) {
-            standings.push(resultUtils.getPerformance(driver, series));
-        }
-        this.sortStandings(standings);
-        return standings;
-    },
-
     updateStandings: function(standings) {
         for (var i = 0; i < this.lastPosition; i++) {
             var driver = new GlideRecord('x_704397_generally_driver');
-            driver.get(standings[i].driver);
+            driver.get(standings[i].competitor);
             driver.setValue('standing', i + 1);
             driver.update();
         }
@@ -140,7 +119,8 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
     updateSeasonInfo: function() {
         this.updatePoints();
         for (var i = 0; i < this.series.length; i++) {
-            this.updateStandings(this.calculateStandings(this.series[i]));
+            var standings = resultUtils.calculateStandings(this.championship, this.series[i]);
+            this.updateStandings(standings);
         }
     }
 });]]></script>
@@ -148,13 +128,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-16 13:33:29</sys_updated_on>
+        <sys_updated_on>2022-02-16 15:50:10</sys_updated_on>
     </sys_script_include>
 </record_update>

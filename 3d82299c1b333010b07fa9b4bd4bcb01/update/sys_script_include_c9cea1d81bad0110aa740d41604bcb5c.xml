@@ -42,6 +42,21 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
+    currentCompetitorsBySeries: function(championship, series) {
+        switch (championship) {
+            case 'driver':
+                var query = 'team.year=' + this.currentYear;
+                if (series === this.juniorSeries) {
+                    return query + '^junior=true' + '^team!=' + teamUtils.getEmploymentAgency();
+                } else {
+                    return query + '^junior=false' + '^team.series=' + series;
+                }
+
+            case 'team':
+                return 'year=' + this.currentYear + '^series=' + series;
+        }
+    },
+
     isSeasonCompleted: function() {
         var result = new GlideRecord('x_704397_generally_result');
         result.addEncodedQuery(this.incompleteRounds());
@@ -99,28 +114,40 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return progress;
     },
 
-    getPerformance: function(driverObj, series) {
-        var driverId = driverObj.getUniqueValue();
+    getPerformance: function(obj, series) {
+        var id = obj.getUniqueValue();
         var performance = {
-            driver: driverId,
-            points: parseInt(driverObj.getElement('points')),
-            finishes: this.getFinishes(driverId),
-            reversedPointsProgress: this.getReversedPointsProgress(driverId, series)
+            competitor: id,
+            points: parseInt(obj.getValue('points')),
+            finishes: this.getFinishes(id),
+            reversedPointsProgress: this.getReversedPointsProgress(id, series)
         };
         return performance;
+    },
+
+    calculateStandings: function(championship, series) {
+        var competitor = this.glideRecordByChampionship(championship);
+        competitor.addEncodedQuery(this.currentCompetitorsBySeries(championship, series));
+        competitor.query();
+        var standings = [];
+        while (competitor.next()) {
+            standings.push(this.getPerformance(competitor, series));
+        }
+        this.sortStandings(standings);
+        return standings;
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>13</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-16 13:33:25</sys_updated_on>
+        <sys_updated_on>2022-02-16 15:50:22</sys_updated_on>
     </sys_script_include>
 </record_update>
