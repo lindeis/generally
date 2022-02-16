@@ -18,8 +18,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return 'year=' + this.currentYear + '^driverISEMPTY';
     },
 
-    finishesAtPosition: function(driverId, position) {
-        return 'driver=' + driverId + '^position=' + position;
+    finishesAtPosition: function(id, position) {
+        switch (this.getEntityById(id)) {
+            case 'driver':
+                return 'driver=' + id + '^position=' + position;
+            case 'team':
+                return 'driver.team=' + id + '^driver.junior=false' + '^position=' + position;
+        }
     },
 
     currentCalendar: function(series) {
@@ -40,9 +45,9 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return true;
     },
 
-    getPositionCount: function(driverId, position) {
+    getPositionCount: function(id, position) {
         var result = new GlideRecord('x_704397_generally_result');
-        result.addEncodedQuery(this.finishesAtPosition(driverId, position));
+        result.addEncodedQuery(this.finishesAtPosition(id, position));
         result.query();
         return result.getRowCount();
     },
@@ -58,12 +63,12 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    getFinishes: function(driverId) {
+    getFinishes: function(id) {
         var finishes = "";
         for (var i = 1; i < this.lastPosition; i++) {
-            finishes += this.getPositionCount(driverId, i).toString(this.radix) + ",";
+            finishes += this.getPositionCount(id, i).toString(this.radix) + ",";
         }
-        finishes += this.getPositionCount(driverId, this.lastPosition).toString(this.radix);
+        finishes += this.getPositionCount(id, this.lastPosition).toString(this.radix);
         return finishes;
     },
 
@@ -102,13 +107,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>9</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-16 11:12:35</sys_updated_on>
+        <sys_updated_on>2022-02-16 11:37:19</sys_updated_on>
     </sys_script_include>
 </record_update>
