@@ -144,19 +144,28 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
             competitor.setValue('standing', i + 1);
             competitor.update();
         }
+    },
+
+    getFinalRacePosition: function(id, series) {
+        var result = new GlideRecord('x_704397_generally_result');
+        result.addEncodedQuery(this.resultAtRound(id, this.getRoundCount(series)));
+        result.query();
+        if (result.next()) {
+            return result.getValue('position');
+        }
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-17 10:11:28</sys_updated_on>
+        <sys_updated_on>2022-02-17 10:46:11</sys_updated_on>
     </sys_script_include>
 </record_update>
