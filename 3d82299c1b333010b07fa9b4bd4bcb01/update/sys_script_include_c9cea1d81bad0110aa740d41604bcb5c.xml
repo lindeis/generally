@@ -114,24 +114,40 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return progress;
     },
 
-    getPerformance: function(obj, series) {
+    performanceBeforeFinale: function(series, performance) {
+        performance.points -= this.getFinalRacePoints(performance.competitor, series);
+        var position = this.getFinalRacePosition(performance.competitor, series);
+        var positionCount = parseInt(performance.finishes.charAt(position * 2 - 2), this.radix);
+        var finishes = this.replaceFinishes(performance.finishes, position, positionCount - 1);
+        performance.finishes = finishes;
+        var progress = performance.reversedPointsProgress.substring(2);
+        performance.reversedPointsProgress = progress;
+    },
+
+    getPerformance: function(isFinal, obj, series) {
         var id = obj.getUniqueValue();
+        var points = parseInt(obj.getValue('points'));
+        var finishes = this.getFinishes(id);
+        var progress = this.getReversedPointsProgress(id, series);
         var performance = {
             competitor: id,
-            points: parseInt(obj.getValue('points')),
-            finishes: this.getFinishes(id),
-            reversedPointsProgress: this.getReversedPointsProgress(id, series)
+            points: points,
+            finishes: finishes,
+            reversedPointsProgress: progress
         };
+        if (!isFinal) {
+            this.performanceBeforeFinale(series, performance);
+        }
         return performance;
     },
 
-    calculateStandings: function(championship, series) {
+    calculateStandings: function(isFinal, championship, series) {
         var competitor = this.glideRecordByChampionship(championship);
         competitor.addEncodedQuery(this.currentCompetitorsBySeries(championship, series));
         competitor.query();
         var standings = [];
         while (competitor.next()) {
-            standings.push(this.getPerformance(competitor, series));
+            standings.push(this.getPerformance(isFinal, competitor, series));
         }
         this.sortStandings(standings);
         return standings;
@@ -164,13 +180,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>19</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-17 10:53:36</sys_updated_on>
+        <sys_updated_on>2022-02-17 11:58:53</sys_updated_on>
     </sys_script_include>
 </record_update>
