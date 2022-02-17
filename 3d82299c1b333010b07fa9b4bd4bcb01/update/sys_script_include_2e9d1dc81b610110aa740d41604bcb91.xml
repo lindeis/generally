@@ -99,10 +99,8 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         driver.addEncodedQuery(this.currentCompetitors());
         driver.query();
         while (driver.next()) {
-            driver.setValue(
-                'points',
-                this.calculatePoints(driver.getUniqueValue(), this.getSeries(driver))
-            );
+            var points = this.calculatePoints(driver.getUniqueValue(), this.getSeries(driver));
+            driver.setValue('points', points);
             driver.update();
         }
     },
@@ -119,13 +117,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>13</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-16 16:04:38</sys_updated_on>
+        <sys_updated_on>2022-02-17 10:16:54</sys_updated_on>
     </sys_script_include>
 </record_update>
