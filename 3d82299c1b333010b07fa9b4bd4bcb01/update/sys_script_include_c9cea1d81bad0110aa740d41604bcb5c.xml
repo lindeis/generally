@@ -177,20 +177,22 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
     },
 
     calculateContenderHappyStandings: function(series, standings) {
-        standings.reverse();
-        for (var i = 0; i < standings.length; i++) {
+        var happyStandings = JSON.parse(JSON.stringify(standings));
+        happyStandings.reverse();
+        for (var i = 0; i < happyStandings.length; i++) {
             var points = this.getPointAllocation(series)[i];
             var position = i + 1;
             var positionCount = parseInt(
-                standings[i].finishes.charAt(position * 2 - 2), this.radix);
+                happyStandings[i].finishes.charAt(position * 2 - 2), this.radix);
             var finishes = this.replaceFinishes(
-                standings[i].finishes, position, positionCount + 1);
-            var progress = standings[i].reversedPointsProgress.replace(
+                happyStandings[i].finishes, position, positionCount + 1);
+            var progress = happyStandings[i].reversedPointsProgress.replace(
                 /^/, points.toString(this.radix) + ",");
-            standings[i].points += points;
-            standings[i].finishes = finishes;
-            standings[i].reversedPointsProgress = progress;
+            happyStandings[i].points += points;
+            happyStandings[i].finishes = finishes;
+            happyStandings[i].reversedPointsProgress = progress;
         }
+        return happyStandings;
     },
 
     getContenderHappyPerformance: function(series, performance) {
@@ -215,19 +217,31 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
             return true;
         }
         return false;
+    },
+
+    updateContenders: function(championship, series, standings) {
+        var happyStandings = this.calculateContenderHappyStandings(series, standings);
+        for (var i = 0; i < standings.length; i++) {
+            if (this.isContender(series, standings[i], happyStandings)) {
+                var competitor = this.glideRecordByChampionship(championship);
+                competitor.get(standings[i].competitor);
+                competitor.setValue('contender', 'true');
+                competitor.update();
+            }
+        }
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>22</sys_mod_count>
+        <sys_mod_count>23</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-17 13:48:25</sys_updated_on>
+        <sys_updated_on>2022-02-17 17:05:56</sys_updated_on>
     </sys_script_include>
 </record_update>
