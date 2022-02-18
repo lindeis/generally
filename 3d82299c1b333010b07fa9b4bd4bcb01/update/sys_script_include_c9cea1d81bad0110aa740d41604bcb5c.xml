@@ -114,14 +114,32 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return progress;
     },
 
-    performanceBeforeFinale: function(series, performance) {
-        performance.points -= this.getFinalRacePoints(performance.competitor, series);
+    driverPerformanceBeforeFinale: function(series, performance) {
         var position = this.getFinalRacePosition(performance.competitor, series);
         var positionCount = parseInt(performance.finishes.charAt(position * 2 - 2), this.radix);
         var finishes = this.replaceFinishes(performance.finishes, position, positionCount - 1);
-        performance.finishes = finishes;
         var progress = performance.reversedPointsProgress.substring(2);
+        performance.points -= this.getFinalRacePoints(performance.competitor, series);
+        performance.finishes = finishes;
         performance.reversedPointsProgress = progress;
+        return performance;
+    },
+
+    teamPerformanceBeforeFinale: function(series, performance) {
+        var team = new GlideRecord('x_704397_generally_team');
+        team.get(performance.competitor);
+        for (i = this.firstPosition; i <= this.seatsPerTeam; i++) {
+            var driver = new GlideRecord('x_704397_generally_driver');
+            driver.get(team.getValue('driver' + i));
+            var position = this.getFinalRacePosition(driver.getUniqueValue(), series);
+            var positionCount = parseInt(
+                performance.finishes.charAt(position * 2 - 2), this.radix);
+            performance.points -= this.getFinalRacePoints(driver.getUniqueValue(), series);
+            performance.finishes = this.replaceFinishes(
+                performance.finishes, position, positionCount - 1);
+        }
+        performance.reversedPointsProgress = performance.reversedPointsProgress.substring(2);
+        return performance;
     },
 
     getPerformance: function(isFinal, obj, series) {
@@ -136,7 +154,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
             reversedPointsProgress: progress
         };
         if (!isFinal) {
-            this.performanceBeforeFinale(series, performance);
+            var championship = this.getChampionshipById(id);
+            switch (championship) {
+                case 'driver':
+                    return this.driverPerformanceBeforeFinale(series, performance);
+                case 'team':
+                    return this.teamPerformanceBeforeFinale(series, performance);
+            }
         }
         return performance;
     },
@@ -237,13 +261,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>25</sys_mod_count>
+        <sys_mod_count>26</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-18 10:14:20</sys_updated_on>
+        <sys_updated_on>2022-02-18 10:54:16</sys_updated_on>
     </sys_script_include>
 </record_update>
