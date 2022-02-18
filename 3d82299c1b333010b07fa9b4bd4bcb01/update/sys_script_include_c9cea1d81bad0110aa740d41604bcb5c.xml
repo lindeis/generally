@@ -209,28 +209,17 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
     calculateContenderHappyStandings: function(series, standings) {
         var happyStandings = JSON.parse(JSON.stringify(standings));
         happyStandings.reverse();
-        for (var i = 0; i < happyStandings.length; i++) {
-            var points = this.getPointAllocation(series)[i];
-            var position = i + 1;
-            var positionCount = parseInt(
-                happyStandings[i].finishes.charAt(position * 2 - 2), this.radix);
-            var finishes = this.replaceFinishes(
-                happyStandings[i].finishes, position, positionCount + 1);
-            var progress = happyStandings[i].reversedPointsProgress.replace(
-                /^/, points.toString(this.radix) + ",");
-            happyStandings[i].points += points;
-            happyStandings[i].finishes = finishes;
-            happyStandings[i].reversedPointsProgress = progress;
+        for (var i = this.firstPosition; i <= happyStandings.length; i++) {
+            happyStandings[i - 1] =
+                this.getContenderHappyPerformance(series, happyStandings[i - 1], i);
         }
         return happyStandings;
     },
 
-    getContenderHappyPerformance: function(series, performance) {
-        var points = this.getPointAllocation(series)[this.firstPosition - 1];
-        var positionCount = parseInt(
-            performance.finishes.charAt(this.firstPosition * 2 - 2), this.radix);
-        var finishes = this.replaceFinishes(
-            performance.finishes, this.firstPosition, positionCount + 1);
+    getContenderHappyPerformance: function(series, performance, position) {
+        var points = this.getPointAllocation(series)[position - 1];
+        var positionCount = parseInt(performance.finishes.charAt(position * 2 - 2), this.radix);
+        var finishes = this.replaceFinishes(performance.finishes, position, positionCount + 1);
         var progress = performance.reversedPointsProgress.replace(
             /^/, points.toString(this.radix) + ",");
         performance.points += points;
@@ -241,7 +230,8 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
 
     isContender: function(series, performance, standings) {
         var happyStandings = standings.slice();
-        happyStandings.push(this.getContenderHappyPerformance(series, performance));
+        happyStandings.push(
+            this.getContenderHappyPerformance(series, performance, this.firstPosition));
         this.sortStandings(happyStandings);
         if (happyStandings[this.firstPosition - 1].competitor === performance.competitor) {
             return true;
@@ -266,13 +256,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>28</sys_mod_count>
+        <sys_mod_count>29</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-18 11:28:17</sys_updated_on>
+        <sys_updated_on>2022-02-18 16:12:49</sys_updated_on>
     </sys_script_include>
 </record_update>
