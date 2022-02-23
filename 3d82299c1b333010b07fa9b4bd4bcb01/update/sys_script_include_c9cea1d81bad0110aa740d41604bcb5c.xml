@@ -216,16 +216,42 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return happyStandings;
     },
 
-    getContenderHappyPerformance: function(series, performance, position) {
-        var points = this.getPointAllocation(series)[position - 1];
+    assignContenderHappyPerformance: function(performance, position, points) {
         var positionCount = parseInt(performance.finishes.charAt(position * 2 - 2), this.radix);
         var finishes = this.replaceFinishes(performance.finishes, position, positionCount + 1);
-        var progress = performance.reversedPointsProgress.replace(
-            /^/, points.toString(this.radix) + ",");
         performance.points += points;
         performance.finishes = finishes;
-        performance.reversedPointsProgress = progress;
-        return performance;
+    },
+
+    getContenderHappyTeamProgress: function(series, performance, position, points) {
+        var lastTeamMatePosition = Math.ceil(position / this.seatsPerTeam) * this.seatsPerTeam;
+        for (i = position; i < lastTeamMatePosition; i++) {
+            points += this.getPointAllocation(series)[i];
+            var teamProgress = performance.reversedPointsProgress.replace(
+                /^/, points.toString(this.radix) + ",");
+        }
+        return teamProgress;
+    },
+
+    getContenderHappyPerformance: function(series, performance, position) {
+        var points = this.getPointAllocation(series)[position - 1];
+        this.assignContenderHappyPerformance(performance, position, points);
+        switch (this.getChampionshipById(performance.competitor)) {
+            case 'driver':
+                var driverProgress = performance.reversedPointsProgress.replace(
+                    /^/, points.toString(this.radix) + ",");
+                performance.reversedPointsProgress = driverProgress;
+                return performance;
+            case 'team':
+                var teamProgress = this.getContenderHappyTeamProgress(
+                    series, performance, position, points);
+                while (position % this.seatsPerTeam > 0) {
+                    position++;
+                    this.getContenderHappyPerformance(series, performance, position);
+                    performance.reversedPointsProgress = teamProgress;
+                    return performance;
+                }
+        }
     },
 
     isContender: function(series, performance, standings) {
@@ -256,13 +282,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>29</sys_mod_count>
+        <sys_mod_count>30</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-18 16:12:49</sys_updated_on>
+        <sys_updated_on>2022-02-23 15:35:19</sys_updated_on>
     </sys_script_include>
 </record_update>
