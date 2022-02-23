@@ -210,8 +210,16 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         var happyStandings = JSON.parse(JSON.stringify(standings));
         happyStandings.reverse();
         for (var i = this.firstPosition; i <= happyStandings.length; i++) {
-            happyStandings[i - 1] =
-                this.getContenderHappyPerformance(series, happyStandings[i - 1], i);
+            switch (this.getChampionshipById(happyStandings[i - 1].competitor)) {
+                case 'driver':
+                    happyStandings[i - 1] =
+                        this.getContenderHappyPerformance(series, happyStandings[i - 1], i);
+                    break;
+                case 'team':
+                    var position = i * this.seatsPerTeam - (this.seatsPerTeam - 1);
+                    happyStandings[i - 1] = this.getContenderHappyPerformance(
+                        series, happyStandings[i - 1], position);
+            }
         }
         return happyStandings;
     },
@@ -282,13 +290,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>30</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-23 15:35:19</sys_updated_on>
+        <sys_updated_on>2022-02-23 15:37:59</sys_updated_on>
     </sys_script_include>
 </record_update>
