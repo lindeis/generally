@@ -122,6 +122,35 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         teamEntryObj.setValue('resource', this.getRandomResource(standing));
     },
 
+    resetTeamMarketInfo: function(teamEntryObj, cause) {
+        teamEntryObj.setValue('prestige', 0);
+        teamEntryObj.setValue('pressure', 0);
+		switch (cause) {
+			case 'promotion':
+				var lastPosition = this.lastPosition / this.seatsPerTeam;
+				teamEntryObj.setValue('resource', this.getRandomResource(lastPosition));
+				break;
+			case 'relegation':
+				teamEntryObj.setValue('resource', this.getRandomResource(this.firstPosition));
+		}
+    },
+
+    setTeamSeries: function(teamObj, teamEntryObj) {
+        var pressure = parseInt(teamEntryObj.getValue('pressure'));
+        var series = teamObj.getValue('series');
+        if (pressure === this.getPatience(series)) {
+            var tier = this.series.indexOf(series);
+            if (this.series[tier + 1] === this.juniorSeries) {
+                teamEntryObj.setAbortAction(true);
+            } else {
+                teamEntryObj.setValue('series', this.series[tier + 1]);
+				this.resetTeamMarketInfo(teamEntryObj, 'relegation');
+            }
+        } else {
+            teamEntryObj.setValue('series', series);
+        }
+    },
+
     generateTeamEntries: function() {
         var team = new GlideRecord('x_704397_generally_team');
         team.addEncodedQuery(this.competitors(this.lastYear));
@@ -134,6 +163,7 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
             teamEntry.setValue('year', this.currentYear);
             teamEntry.setValue('name', team.getValue('name'));
             this.setTeamMarketInfo(team, teamEntry);
+            this.setTeamSeries(team, teamEntry);
             teamEntry.insert();
         }
     }
@@ -142,13 +172,13 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:06:00</sys_created_on>
         <sys_id>96ac9dc81b610110aa740d41604bcb0d</sys_id>
-        <sys_mod_count>13</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_96ac9dc81b610110aa740d41604bcb0d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-24 14:23:30</sys_updated_on>
+        <sys_updated_on>2022-02-24 15:35:24</sys_updated_on>
     </sys_script_include>
 </record_update>
