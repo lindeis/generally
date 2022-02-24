@@ -96,23 +96,43 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    setTeamFame: function(teamObj, standing, teamEntryObj) {
-        var prestige = parseInt(teamObj.getValue('prestige'));
-        var pressure = parseInt(teamObj.getValue('pressure'));
-        if (standing === this.firstPosition) {
-            teamEntryObj.setValue('prestige', prestige + 1);
-            teamEntryObj.setValue('pressure', pressure);
-        } else if (standing === this.lastPosition / this.seatsPerTeam) {
-            if (prestige > 0) {
-                teamEntryObj.setValue('prestige', prestige - 1);
-                teamEntryObj.setValue('pressure', pressure);
-            } else {
-                teamEntryObj.setValue('prestige', prestige);
-                teamEntryObj.setValue('pressure', pressure + 1);
-            }
+    setChampionFame: function(fame) {
+        if (fame.pressure > 0) {
+            fame.obj.setValue('prestige', fame.prestige + 1);
+            fame.obj.setValue('pressure', fame.pressure - 1);
         } else {
-            teamEntryObj.setValue('prestige', prestige);
-            teamEntryObj.setValue('pressure', pressure);
+            fame.obj.setValue('prestige', fame.prestige + 1);
+            fame.obj.setValue('pressure', fame.pressure);
+        }
+    },
+
+    setBackmarkerFame: function(fame) {
+        if (fame.prestige > 0) {
+            fame.obj.setValue('prestige', fame.prestige - 1);
+            fame.obj.setValue('pressure', fame.pressure);
+        } else {
+            fame.obj.setValue('prestige', fame.prestige);
+            fame.obj.setValue('pressure', fame.pressure + 1);
+        }
+    },
+
+    setMidTeamFame: function(fame) {
+        fame.obj.setValue('prestige', fame.prestige);
+        fame.obj.setValue('pressure', fame.pressure);
+    },
+
+    setTeamFame: function(teamObj, standing, teamEntryObj) {
+        var fame = {
+            obj: teamEntryObj,
+            prestige: parseInt(teamObj.getValue('prestige')),
+            pressure: parseInt(teamObj.getValue('pressure'))
+        };
+        if (standing === this.firstPosition) {
+            this.setChampionFame(fame);
+        } else if (standing === this.lastPosition / this.seatsPerTeam) {
+            this.setBackmarkerFame(fame);
+        } else {
+            this.setMidTeamFame(fame);
         }
     },
 
@@ -172,13 +192,13 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:06:00</sys_created_on>
         <sys_id>96ac9dc81b610110aa740d41604bcb0d</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>16</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_96ac9dc81b610110aa740d41604bcb0d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-24 17:44:03</sys_updated_on>
+        <sys_updated_on>2022-02-24 18:12:51</sys_updated_on>
     </sys_script_include>
 </record_update>
