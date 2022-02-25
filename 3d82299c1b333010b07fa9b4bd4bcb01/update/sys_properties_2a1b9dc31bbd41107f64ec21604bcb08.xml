@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description/>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_704397_generally.teamWaitingList</name>
+        <read_roles/>
+        <suffix>teamWaitingList</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-25 10:15:47</sys_created_on>
+        <sys_id>2a1b9dc31bbd41107f64ec21604bcb08</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_704397_generally.teamWaitingList</sys_name>
+        <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+        <sys_update_name>sys_properties_2a1b9dc31bbd41107f64ec21604bcb08</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-25 11:26:03</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+	"team": {&#13;
+		"0": {&#13;
+			"abbrev": "FOR",&#13;
+			"name": "Force India",&#13;
+			"origin": "IND"&#13;
+		},&#13;
+		"1": {&#13;
+			"abbrev": "HAA",&#13;
+			"name": "Haas",&#13;
+			"origin": "USA"&#13;
+		},&#13;
+		"2": {&#13;
+			"abbrev": "ALF",&#13;
+			"name": "Alfa Romeo",&#13;
+			"origin": "ITA"&#13;
+		},&#13;
+		"3": {&#13;
+			"abbrev": "MAS",&#13;
+			"name": "Maserati",&#13;
+			"origin": "ITA"&#13;
+		},&#13;
+		"4": {&#13;
+			"abbrev": "POR",&#13;
+			"name": "Porsche",&#13;
+			"origin": "GER"&#13;
+		},&#13;
+		"5": {&#13;
+			"abbrev": "TYR",&#13;
+			"name": "Tyrrell",&#13;
+			"origin": "ENG"&#13;
+		}&#13;
+	}&#13;
+}</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=2a1b9dc31bbd41107f64ec21604bcb08"/>
+</record_update>

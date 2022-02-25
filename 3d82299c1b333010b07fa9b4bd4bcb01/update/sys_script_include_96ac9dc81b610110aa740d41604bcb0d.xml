@@ -16,6 +16,11 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
 
     championship: 'team',
     resourceInterval: parseInt(gs.getProperty('x_704397_generally.resourceInterval')),
+    waitingListJson: gs.getProperty('x_704397_generally.teamWaitingList'),
+
+    waitingList: function() {
+        return JSON.parse(this.waitingListJson)[this.championship];
+    },
 
     employmentAgency: function(year) {
         return 'year=' + year + '^nameISEMPTY';
@@ -155,6 +160,20 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
+    getNewTeam: function() {
+        var random = Math.floor(Math.random() * Object.keys(this.waitingList()).length);
+        return this.waitingList()[random];
+    },
+
+    establishTeam: function(newTeam) {
+        var team = new GlideRecord('x_704397_generally_team_info');
+        team.initialize();
+        team.setValue('abbrev', newTeam.abbrev);
+        team.setValue('name', newTeam.name);
+        team.setValue('origin', newTeam.origin);
+        team.insert();
+    },
+
     setTeamSeries: function(teamObj, teamEntryObj) {
         var pressure = parseInt(teamEntryObj.getValue('pressure'));
         var series = teamObj.getValue('series');
@@ -162,6 +181,7 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
             var tier = this.series.indexOf(series);
             if (this.series[tier + 1] === this.juniorSeries) {
                 teamEntryObj.setAbortAction(true);
+                this.establishTeam(this.getNewTeam());
             } else {
                 teamEntryObj.setValue('series', this.series[tier + 1]);
                 this.resetTeamMarketInfo(teamEntryObj, 'relegation');
@@ -192,13 +212,13 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:06:00</sys_created_on>
         <sys_id>96ac9dc81b610110aa740d41604bcb0d</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_96ac9dc81b610110aa740d41604bcb0d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-24 18:12:51</sys_updated_on>
+        <sys_updated_on>2022-02-25 12:13:04</sys_updated_on>
     </sys_script_include>
 </record_update>
