@@ -42,19 +42,19 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    currentCompetitorsBySeries: function(championship, series) {
+    competitorsBySeries: function(championship, year, series) {
         switch (championship) {
             case 'driver':
-                var query = 'team.year=' + this.currentYear;
+                var query = 'team.year=' + year;
                 if (series === this.juniorSeries) {
                     return query + '^junior=true' + '^team!=' +
-                        teamUtils.getEmploymentAgency(this.currentYear);
+                        teamUtils.getEmploymentAgency(year);
                 } else {
                     return query + '^junior=false' + '^team.series=' + series;
                 }
 
             case 'team':
-                return 'year=' + this.currentYear + '^series=' + series;
+                return 'year=' + year + '^series=' + series;
         }
     },
 
@@ -173,7 +173,8 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
 
     calculateStandings: function(isFinal, championship, series) {
         var competitor = this.glideRecordByChampionship(championship);
-        competitor.addEncodedQuery(this.currentCompetitorsBySeries(championship, series));
+        competitor.addEncodedQuery(
+            this.competitorsBySeries(championship, this.currentYear, series));
         competitor.query();
         var standings = [];
         while (competitor.next()) {
@@ -291,13 +292,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>33</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-24 13:37:16</sys_updated_on>
+        <sys_updated_on>2022-03-01 10:15:18</sys_updated_on>
     </sys_script_include>
 </record_update>
