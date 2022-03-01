@@ -30,6 +30,14 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         return 'year=' + year + '^sys_id!=' + this.getEmploymentAgency(year);
     },
 
+    orderByPrestige: function() {
+        return '^ORDERBYDESCprestige^ORDERBYnumber';
+    },
+
+    orderByRanking: function() {
+        return '^ORDERBYseries^ORDERBYstanding';
+    },
+
     getEmploymentAgency: function(year) {
         var team = new GlideRecord('x_704397_generally_team');
         team.addEncodedQuery(this.employmentAgency(year));
@@ -199,11 +207,45 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
+    relegationOccured: function(series) {
+        var team = new GlideRecord('x_704397_generally_team');
+        team.addEncodedQuery(
+            resultUtils.competitorsBySeries(this.championship, this.currentYear, series));
+        team.query();
+        if (team.getRowCount() < this.lastPosition / this.seatsPerTeam) {
+            return true;
+        }
+        return false;
+    },
+
+    promoteTeam: function(series) {
+        var team = new GlideRecord('x_704397_generally_team');
+        team.addEncodedQuery(
+            resultUtils.competitorsBySeries(this.championship, this.currentYear, series) +
+            this.orderByPrestige());
+        team.query();
+        if (team.next()) {
+            var tier = this.series.indexOf(series);
+            team.setValue('series', this.series[tier - 1]);
+            this.resetTeamMarketInfo(team, 'promotion');
+            team.update();
+        }
+    },
+
+    finaliseEntries: function() {
+        var series = this.series.filter(function(s) {
+            return s !== this.juniorSeries;
+        });
+        for (var i = 0; i < series.length; i++) {
+            if (this.relegationOccured(series[i])) {
+                this.promoteTeam(series[i + 1]);
+            }
+        }
+    },
+
     generateTeamEntries: function() {
         var team = new GlideRecord('x_704397_generally_team');
-        team.addEncodedQuery(this.competitors(this.lastYear));
-        team.orderBy('series');
-        team.orderBy('standing');
+        team.addEncodedQuery(this.competitors(this.lastYear) + this.orderByRanking());
         team.query();
         while (team.next()) {
             var teamEntry = new GlideRecord('x_704397_generally_team');
@@ -212,19 +254,20 @@ TeamUtils.prototype = Object.extendsObject(Utils, {
             this.setTeamSeries(team, teamEntry);
             teamEntry.insert();
         }
+        this.finaliseEntries();
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:06:00</sys_created_on>
         <sys_id>96ac9dc81b610110aa740d41604bcb0d</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>TeamUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_96ac9dc81b610110aa740d41604bcb0d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-01 08:43:16</sys_updated_on>
+        <sys_updated_on>2022-03-01 11:04:39</sys_updated_on>
     </sys_script_include>
 </record_update>
