@@ -21,6 +21,7 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
     juniorMinAge: parseInt(gs.getProperty('x_704397_generally.juniorRookieMinAge')),
     skillInterval: parseInt(gs.getProperty('x_704397_generally.rookieSkillInterval')),
     juniorSkillInterval: parseInt(gs.getProperty('x_704397_generally.juniorRookieSkillInterval')),
+    maxSkill: parseInt(gs.getProperty('x_704397_generally.maxSkill')),
 
     market: function(year) {
         return 'team.year=' + year;
@@ -36,6 +37,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
 
     isJuniorRookie: function(driverInfoObj) {
         if (driverInfoObj.helmet.nil()) {
+            return true;
+        }
+        return false;
+    },
+
+    isJunior: function(driverObj) {
+        if (driverObj.getValue('junior') == true) {
             return true;
         }
         return false;
@@ -137,6 +145,64 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
+    juniorSkillImprovementChance: function() {
+        var chance = gs.getProperty('x_704397_generally.juniorSkillImprovementChance')
+            .split(',').map(function(e) {
+                return parseInt(e);
+            });
+        return chance;
+    },
+
+    getDriverQuality: function(driverObj, driverEntryObj) {
+        var quality = {
+            age: parseInt(driverEntryObj.getValue('age')),
+            skill: parseInt(driverObj.getValue('skill')),
+            standing: parseInt(driverObj.getValue('standing'))
+        };
+        return quality;
+    },
+
+    setJuniorSkill: function(quality, random) {
+        if (random < this.juniorSkillImprovementChance()[quality.standing - 1]) {
+            quality.skill += 1;
+        }
+    },
+
+    hasActiveExperience: function(driverObj) {
+        if (driverObj.standing.nil()) {
+            return false;
+        }
+        return true;
+    },
+
+    setSeniorSkill: function(quality, random) {
+        var improves = quality.age < 20 && random < 33 || quality.age < 24 && random < 17;
+        var declines = quality.age > 29 && random < 17 ||
+            quality.age > 32 && random < 33 || quality.age > 35 && random < 50;
+        if (improves) {
+            quality.skill += 1;
+        } else if (declines) {
+            quality.skill -= 1;
+        }
+    },
+
+    setSkill: function(driverObj, driverEntryObj) {
+        var quality = this.getDriverQuality(driverObj, driverEntryObj);
+        var random = Math.random() * 100;
+
+        if (this.isJunior(driverObj)) {
+            this.setJuniorSkill(quality, random);
+        } else if (this.hasActiveExperience(driverObj)) {
+            this.setSeniorSkill(quality, random);
+        }
+
+        if (quality.skill > this.maxSkill) {
+            driverEntryObj.setValue('skill', this.maxSkill);
+        } else {
+            driverEntryObj.setValue('skill', quality.skill);
+        }
+    },
+
     generateDriverEntries: function() {
         var driver = new GlideRecord('x_704397_generally_driver');
         driver.addEncodedQuery(this.market(this.lastYear) + this.orderByRanking());
@@ -144,6 +210,7 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         while (driver.next()) {
             var driverEntry = new GlideRecord('x_704397_generally_driver');
             this.initializeDriverEntry(driver, driverEntry);
+            this.setSkill(driver, driverEntry);
             driverEntry.insert();
         }
     }
@@ -152,13 +219,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-02 19:22:07</sys_updated_on>
+        <sys_updated_on>2022-03-03 16:15:19</sys_updated_on>
     </sys_script_include>
 </record_update>
