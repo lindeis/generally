@@ -38,6 +38,10 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         return this.market(year) + '^team!=' + teamUtils.getEmploymentAgency(year);
     },
 
+    driverByYear: function(driverObj, year) {
+        return this.market(year) + '^abbrev=' + driverObj.getValue('abbrev');
+    },
+
     orderByRanking: function() {
         return '^ORDERBYjunior^ORDERBYteam.series^ORDERBYteam.standing^ORDERBYnumber';
     },
@@ -173,7 +177,7 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    hasActiveExperience: function(driverObj) {
+    hasExperience: function(driverObj) {
         if (driverObj.standing.nil()) {
             return false;
         }
@@ -197,7 +201,7 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
 
         if (this.isJunior(driverObj)) {
             this.setJuniorSkill(quality, random);
-        } else if (this.hasActiveExperience(driverObj)) {
+        } else if (this.hasExperience(driverObj)) {
             this.setSeniorSkill(quality, random);
         }
 
@@ -256,9 +260,31 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         return value[standing - 1];
     },
 
+    getDriverByYear: function(driverObj, year) {
+        var driver = new GlideRecord('x_704397_generally_driver');
+        driver.addEncodedQuery(this.driverByYear(driverObj, year));
+        driver.query();
+        if (driver.next()) {
+            return driver;
+        }
+    },
+
+    valueByPenultimateYear: function(driverObj) {
+        var value = 0;
+        var driverExpObj = this.getDriverByYear(driverObj, this.penultimateYear);
+        if (driverExpObj !== undefined && this.hasExperience(driverExpObj)) {
+            var series = driverExpObj.getElement('team.series');
+            var standing = parseInt(driverExpObj.getValue('standing'));
+            value += this.valueByStanding(series, standing);
+        } else {
+            value += this.valueByLastYear(driverObj) / this.activeExperienceWeight;
+        }
+        return value;
+    },
+
     valueByLastYear: function(driverObj) {
         var value = 0;
-        if (this.hasActiveExperience(driverObj)) {
+        if (this.hasExperience(driverObj)) {
             var series = driverObj.getElement('team.series');
             var standing = parseInt(driverObj.getValue('standing'));
             value += this.valueByStanding(series, standing) * this.activeExperienceWeight;
@@ -268,6 +294,7 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
 
     valueByExperience: function(driverObj) {
         var value = 0;
+        value += this.valueByPenultimateYear(driverObj);
         value += this.valueByLastYear(driverObj);
         return value;
     },
@@ -304,13 +331,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>29</sys_mod_count>
+        <sys_mod_count>30</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-05 11:57:12</sys_updated_on>
+        <sys_updated_on>2022-03-05 15:40:59</sys_updated_on>
     </sys_script_include>
 </record_update>
