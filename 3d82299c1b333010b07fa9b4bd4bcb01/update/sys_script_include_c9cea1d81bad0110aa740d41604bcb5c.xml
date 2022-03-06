@@ -346,9 +346,11 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    getRandomTrack: function(series) {
-        var tracks = this.getTracks(series);
-        var random = Math.floor(Math.random() * Object.keys(tracks).length);
+    getRandomTrack: function(tracks) {
+        var random;
+        while (tracks[random] === undefined) {
+            random = Math.floor(Math.random() * Object.keys(tracks).length);
+        }
         return tracks[random].name;
     },
 
@@ -388,6 +390,24 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return tracks;
     },
 
+    changeEvent: function(series, calendar) {
+        var round = Math.floor(Math.random() * calendar.length);
+        var tracks = this.getPossibleTracks(series);
+        var track;
+        switch (this.getEventChangeType()) {
+            case 'deletion':
+                calendar.splice(round, 1);
+                break;
+            case 'replacement':
+                track = this.getRandomTrack(tracks);
+                calendar[round] = track;
+                break;
+            case 'augmentation':
+                track = this.getRandomTrack(tracks);
+                calendar.splice(round, 0, track);
+        }
+    },
+
     createCalendar: function(series) {
         var event = new GlideRecord('x_704397_generally_result');
         for (var position = this.firstPosition; position <= this.lastPosition; position++) {
@@ -406,13 +426,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>48</sys_mod_count>
+        <sys_mod_count>49</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-06 20:02:49</sys_updated_on>
+        <sys_updated_on>2022-03-06 21:10:42</sys_updated_on>
     </sys_script_include>
 </record_update>
