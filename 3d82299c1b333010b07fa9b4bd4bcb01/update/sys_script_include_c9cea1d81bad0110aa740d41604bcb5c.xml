@@ -352,6 +352,32 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return tracks[random].name;
     },
 
+    getTrackByName: function(name, series) {
+        var tracks = this.getTracks(series);
+        for (var i in tracks) {
+            var trackName = tracks[i].name;
+            if ('layout' in tracks[i]) {
+                for (var j in tracks[i].layout) {
+                    var layout = tracks[i].layout[j];
+                    if (trackName + layout === name) {
+                        return i;
+                    }
+                }
+            }
+            if ('weather' in tracks[i]) {
+                for (var k in tracks[i].weather) {
+                    var weather = tracks[i].weather[k];
+                    if (trackName + weather === name) {
+                        return i;
+                    }
+                }
+            }
+            if (trackName === name) {
+                return i;
+            }
+        }
+    },
+
     createCalendar: function(series) {
         var event = new GlideRecord('x_704397_generally_result');
         for (var position = this.firstPosition; position <= this.lastPosition; position++) {
@@ -377,6 +403,6 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-06 17:00:28</sys_updated_on>
+        <sys_updated_on>2022-03-06 19:40:15</sys_updated_on>
     </sys_script_include>
 </record_update>
