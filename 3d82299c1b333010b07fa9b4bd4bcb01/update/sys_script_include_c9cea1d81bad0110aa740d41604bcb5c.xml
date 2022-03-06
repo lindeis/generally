@@ -337,15 +337,17 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    getRandomTrack: function(series) {
-        var tracks;
+    getTracks: function(series) {
         switch (series) {
             case this.juniorSeries:
-                tracks = this.kartTracks();
-                break;
+                return this.kartTracks();
             default:
-                tracks = this.tracks();
+                return this.tracks();
         }
+    },
+
+    getRandomTrack: function(series) {
+        var tracks = this.getTracks(series);
         var random = Math.floor(Math.random() * Object.keys(tracks).length);
         return tracks[random].name;
     },
@@ -368,13 +370,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>45</sys_mod_count>
+        <sys_mod_count>46</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-06 13:00:13</sys_updated_on>
+        <sys_updated_on>2022-03-06 17:00:28</sys_updated_on>
     </sys_script_include>
 </record_update>
