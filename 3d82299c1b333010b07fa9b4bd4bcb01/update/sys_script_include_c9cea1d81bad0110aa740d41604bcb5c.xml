@@ -22,6 +22,11 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return parseInt(gs.getProperty(property));
     },
 
+    getMaxRound: function(series) {
+        var property = 'x_704397_generally.' + series + 'MaxRound';
+        return parseInt(gs.getProperty(property));
+    },
+
     tracks: function() {
         return JSON.parse(this.tracksJson)['track'];
     },
@@ -338,6 +343,11 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return calendar.length === this.getMinRound(series);
     },
 
+    atMaxRound: function(series) {
+        var calendar = this.getLastCalendar(series);
+        return calendar.length === this.getMaxRound(series);
+    },
+
     getEventChangeType: function(series) {
         switch (series) {
             case this.juniorSeries:
@@ -352,6 +362,8 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
                     }
                 } else if (change.replacement) {
                     return 'replacement';
+                } else if (this.atMaxRound(series)) {
+                    return this.getEventChangeType(series);
                 } else {
                     return 'augmentation';
                 }
@@ -467,13 +479,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>54</sys_mod_count>
+        <sys_mod_count>55</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-07 09:30:04</sys_updated_on>
+        <sys_updated_on>2022-03-07 09:59:08</sys_updated_on>
     </sys_script_include>
 </record_update>
