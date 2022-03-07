@@ -338,32 +338,22 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return change;
     },
 
-    atMinRound: function(series) {
-        var calendar = this.getLastCalendar(series);
-        return calendar.length === this.getMinRound(series);
-    },
-
-    atMaxRound: function(series) {
-        var calendar = this.getLastCalendar(series);
-        return calendar.length === this.getMaxRound(series);
-    },
-
-    getEventChangeType: function(series) {
+    getEventChangeType: function(series, calendar) {
         switch (series) {
             case this.juniorSeries:
                 return 'replacement';
             default:
                 var change = this.getEventChange();
                 if (change.deletion) {
-                    if (this.atMinRound(series)) {
-                        return this.getEventChangeType(series);
+                    if (calendar.length === this.getMinRound(series)) {
+                        return this.getEventChangeType(series, calendar);
                     } else {
                         return 'deletion';
                     }
                 } else if (change.replacement) {
                     return 'replacement';
-                } else if (this.atMaxRound(series)) {
-                    return this.getEventChangeType(series);
+                } else if (calendar.length === this.getMinRound(series)) {
+                    return this.getEventChangeType(series, calendar);
                 } else {
                     return 'augmentation';
                 }
@@ -432,7 +422,7 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         var round = Math.floor(Math.random() * calendar.length);
         var tracks = this.getPossibleTracks(series);
         var track;
-        switch (this.getEventChangeType()) {
+        switch (this.getEventChangeType(series, calendar)) {
             case 'deletion':
                 calendar.splice(round, 1);
                 break;
@@ -479,13 +469,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>55</sys_mod_count>
+        <sys_mod_count>56</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-07 09:59:08</sys_updated_on>
+        <sys_updated_on>2022-03-07 10:15:39</sys_updated_on>
     </sys_script_include>
 </record_update>
