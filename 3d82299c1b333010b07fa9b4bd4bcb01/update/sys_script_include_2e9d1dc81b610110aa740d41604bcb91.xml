@@ -83,6 +83,7 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         rookie.setValue('display', driverInfoObj.getValue('abbrev'));
         rookie.setValue('age', this.getRandomAge(this.hasLicence(driverInfoObj)));
         rookie.setValue('skill', this.getRandomSkill(this.hasLicence(driverInfoObj)));
+        rookie.setValue('market_value', this.valueByAge(rookie) + rookie.skill);
         rookie.setValue('team', teamUtils.getEmploymentAgency(this.currentYear));
         rookie.insert();
     },
@@ -333,13 +334,13 @@ DriverUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-03 16:16:50</sys_created_on>
         <sys_id>2e9d1dc81b610110aa740d41604bcb91</sys_id>
-        <sys_mod_count>31</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name>DriverUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_2e9d1dc81b610110aa740d41604bcb91</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-05 15:54:43</sys_updated_on>
+        <sys_updated_on>2022-03-07 21:29:58</sys_updated_on>
     </sys_script_include>
 </record_update>
