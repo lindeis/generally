@@ -17,6 +17,11 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
     tracksJson: gs.getProperty('x_704397_generally.tracks'),
     kartTracksJson: gs.getProperty('x_704397_generally.kartTracks'),
 
+    getMinRound: function(series) {
+        var property = 'x_704397_generally.' + series + 'MinRound';
+        return parseInt(gs.getProperty(property));
+    },
+
     tracks: function() {
         return JSON.parse(this.tracksJson)['track'];
     },
@@ -318,6 +323,11 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         return calendar;
     },
 
+    atMinRound: function(series) {
+        var calendar = this.getLastCalendar(series);
+        return calendar.length === this.getMinRound(series);
+    },
+
     getEventChangeType: function(series) {
         switch (series) {
             case this.juniorSeries:
@@ -328,7 +338,11 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
                 var replacement = random >= 18 && random < 78;
                 var augmentation = random > 78;
                 if (deletion) {
-                    return 'deletion';
+                    if (this.atMinRound(series)) {
+                        return this.getEventChangeType(series);
+                    } else {
+                        return 'deletion';
+                    }
                 } else if (replacement) {
                     return 'replacement';
                 } else {
@@ -446,13 +460,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>52</sys_mod_count>
+        <sys_mod_count>53</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-06 22:27:39</sys_updated_on>
+        <sys_updated_on>2022-03-07 09:14:07</sys_updated_on>
     </sys_script_include>
 </record_update>
