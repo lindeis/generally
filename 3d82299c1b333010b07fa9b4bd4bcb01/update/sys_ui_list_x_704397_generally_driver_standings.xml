@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_704397_generally_driver" version="2" view="standings">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>number</element>
+            <list_id display_value="x_704397_generally_driver" element="NULL" name="x_704397_generally_driver" parent="NULL" relationship="NULL" sys_domain="global" view="78aa0bf61b8ac1107f64ec21604bcbbc">369b4bf61b8ac1107f64ec21604bcbb2</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 09:41:29</sys_created_on>
+            <sys_id>fe9b873a1b8ac1107f64ec21604bcb79</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-09 09:41:29</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>standing</element>
+            <list_id display_value="x_704397_generally_driver" element="NULL" name="x_704397_generally_driver" parent="NULL" relationship="NULL" sys_domain="global" view="78aa0bf61b8ac1107f64ec21604bcbbc">369b4bf61b8ac1107f64ec21604bcbb2</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 09:41:29</sys_created_on>
+            <sys_id>729b873a1b8ac1107f64ec21604bcb7a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-09 09:41:29</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>abbrev</element>
+            <list_id display_value="x_704397_generally_driver" element="NULL" name="x_704397_generally_driver" parent="NULL" relationship="NULL" sys_domain="global" view="78aa0bf61b8ac1107f64ec21604bcbbc">369b4bf61b8ac1107f64ec21604bcbb2</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 09:41:29</sys_created_on>
+            <sys_id>f29b873a1b8ac1107f64ec21604bcb7a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-09 09:41:29</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>team</element>
+            <list_id display_value="x_704397_generally_driver" element="NULL" name="x_704397_generally_driver" parent="NULL" relationship="NULL" sys_domain="global" view="78aa0bf61b8ac1107f64ec21604bcbbc">369b4bf61b8ac1107f64ec21604bcbb2</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 09:41:29</sys_created_on>
+            <sys_id>769b873a1b8ac1107f64ec21604bcb7a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-09 09:41:29</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>points</element>
+            <list_id display_value="x_704397_generally_driver" element="NULL" name="x_704397_generally_driver" parent="NULL" relationship="NULL" sys_domain="global" view="78aa0bf61b8ac1107f64ec21604bcbbc">369b4bf61b8ac1107f64ec21604bcbb2</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 09:41:29</sys_created_on>
+            <sys_id>f69b873a1b8ac1107f64ec21604bcb7a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-09 09:41:29</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>contender</element>
+            <list_id display_value="x_704397_generally_driver" element="NULL" name="x_704397_generally_driver" parent="NULL" relationship="NULL" sys_domain="global" view="78aa0bf61b8ac1107f64ec21604bcbbc">369b4bf61b8ac1107f64ec21604bcbb2</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 09:41:29</sys_created_on>
+            <sys_id>7a9b873a1b8ac1107f64ec21604bcb7a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-09 09:41:29</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_704397_generally_driver</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 09:41:29</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>369b4bf61b8ac1107f64ec21604bcbb2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_704397_generally_driver</sys_name>
+            <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+            <sys_update_name>sys_ui_list_x_704397_generally_driver_standings</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-09 09:41:29</sys_updated_on>
+            <sys_user/>
+            <view display_value="Standings" name="standings">78aa0bf61b8ac1107f64ec21604bcbbc</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>
