@@ -429,9 +429,8 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         }
     },
 
-    getPossibleTracks: function(series) {
+    getPossibleTracks: function(series, calendar) {
         var tracks = this.getTracks(series);
-        var calendar = this.getLastCalendar(series);
         for (var i = 0; i < calendar.length; i++) {
             var track = this.getTrackByName(calendar[i], series);
             delete tracks[track];
@@ -441,7 +440,7 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
 
     changeEvent: function(series, calendar) {
         var round = Math.floor(Math.random() * calendar.length);
-        var tracks = this.getPossibleTracks(series);
+        var tracks = this.getPossibleTracks(series, calendar);
         var track = this.getRandomTrack(tracks);
         switch (this.getEventChangeType(series, calendar)) {
             case 'deletion':
@@ -541,13 +540,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>64</sys_mod_count>
+        <sys_mod_count>65</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-07 21:04:45</sys_updated_on>
+        <sys_updated_on>2022-03-10 06:59:40</sys_updated_on>
     </sys_script_include>
 </record_update>
