@@ -515,6 +515,17 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         resultObj.setValue('fastest_lap', trackRecord.record);
     },
 
+    resetTrackRecords: function(series) {
+        var result = new GlideRecord('x_704397_generally_result');
+        result.addEncodedQuery(this.calendar(this.currentYear, series));
+        result.query();
+        while (result.next()) {
+            result.setValue('driver', '');
+            result.setValue('fastest_lap', '');
+            result.update();
+        }
+    },
+
     createCalendar: function(series) {
         var event = new GlideRecord('x_704397_generally_result');
         var calendar = this.getNewCalendar(series);
@@ -540,13 +551,13 @@ ResultUtils.prototype = Object.extendsObject(Utils, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-04 12:06:55</sys_created_on>
         <sys_id>c9cea1d81bad0110aa740d41604bcb5c</sys_id>
-        <sys_mod_count>65</sys_mod_count>
+        <sys_mod_count>66</sys_mod_count>
         <sys_name>ResultUtils</sys_name>
         <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
         <sys_update_name>sys_script_include_c9cea1d81bad0110aa740d41604bcb5c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-10 06:59:40</sys_updated_on>
+        <sys_updated_on>2022-03-10 09:07:18</sys_updated_on>
     </sys_script_include>
 </record_update>
