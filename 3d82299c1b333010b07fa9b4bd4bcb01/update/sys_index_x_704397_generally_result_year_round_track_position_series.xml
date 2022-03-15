@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_index">
+    <sys_index action="INSERT_OR_UPDATE">
+        <col_name_string>year,round,track,position,series</col_name_string>
+        <index_col_name>a5f7f9f41b1201107f64ec21604bcb9b,65f7f9f41b1201107f64ec21604bcb72,a1f7f9f41b1201107f64ec21604bcb9a,61f7f9f41b1201107f64ec21604bcb71,69f7f9f41b1201107f64ec21604bcb73</index_col_name>
+        <logical_table_name>x_704397_generally_result</logical_table_name>
+        <sys_class_name>sys_index</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2022-03-15 08:46:29</sys_created_on>
+        <sys_id>a7887d381b1201107f64ec21604bcb9d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_704397_generally_result</sys_name>
+        <sys_package display_value="Generally" source="x_704397_generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Generally">3d82299c1b333010b07fa9b4bd4bcb01</sys_scope>
+        <sys_update_name>sys_index_x_704397_generally_result_year_round_track_position_series</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2022-03-15 08:46:29</sys_updated_on>
+        <table display_value="Result" name="x_704397_generally_result">a9f7f9f41b1201107f64ec21604bcb64</table>
+        <unique_index>false</unique_index>
+    </sys_index>
+</record_update>
